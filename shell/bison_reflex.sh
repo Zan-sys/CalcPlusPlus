@@ -1,4 +1,15 @@
 #!/bin/bash
+
+#build re/flex
+if [ ! -f "./lib/RE-flex/bin/reflex" ]
+then
+    echo BUILD RE/FLEX
+     cd ./lib/RE-flex
+     . ./clean.sh
+     . ./build.sh
+     cd ./../../
+fi
+
 cd ./src/interpreter
 
 #bison

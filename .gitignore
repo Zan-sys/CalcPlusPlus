@@ -9,3 +9,9 @@ project-config.hpp
 
 # sciter resources
 /src/gui_resources.cpp
+
+# interpreter
+/src/interpreter/location.*
+/src/interpreter/scanner.*
+/src/interpreter/parser.*
+
