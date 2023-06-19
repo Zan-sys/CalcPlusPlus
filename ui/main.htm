@@ -1,0 +1,1235 @@
+<!--
+    Документ описывает окно приложения.
+    Стиль рамки окна, заголовка и кнопок управления.
+    При разработке кроссплатформенного ПО необходимо оформлять стиль окна вручную.
+    Иначе под разными операционными системами (linux/windows) сбивается позиция HTML элементов в окне.
+-->
+<!DOCTYPE html>
+<html window-frame="extended" window-resizable="true" window-icon="./images/main-ico-32x32.png">
+    <header>
+        <img src="./images/main-ico-16x16.png" role="window-caption"/>
+        <window-caption role="window-caption"></window-caption>
+        <window-buttons>
+            <window-button role="window-minimize"></window-button>
+            <window-button role="window-maximize"></window-button>
+            <window-button role="window-close"></window-button>
+          </window-buttons>
+    </header>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <!-- ВИДЖЕТЫ/КОМПОНЕНТЫ -->
+        <link href="widgets/tabs.css" type="text/css" rel="stylesheet">
+        <!-- CSS/JS -->
+        <link href="css/main.css" type="text/css" rel="stylesheet">
+        <script type="module" src="js/main.js"></script>
+    </head>
+    <body>
+        <tabs#main-tabs-panel>
+            <strip>
+                <label for="description">Описание</label>
+                <label for="examples">Примеры</label>
+                <label for="math-input">Математическое выражение</label>
+                <label for="parse-tree">Дерево разбора</label>
+                <label for="run-math">Выполнить</label>
+            </strip>
+            <panels>
+                <!-- ВКЛАДКА ОПИСАНИЕ -->
+                <section(description)#description-tab>
+                    <div.main_label>Синтаксис формирования математических выражений</div>
+                    <!-- Примечание -->
+                    <details>
+                        <summary>Примечание</summary>
+                        <div selectable>
+                            <ol>
+                                <li>Регистр символов в математическом выражении не учитывается.</li>
+                                <li>Все пробельные символы игнорируются.</li>
+                                <li>Аргумент - любое математическое выражение, переменная или внешняя переменная.</li>
+                                <li>Разделитель между дробной и целой частью числа может быть, как точка (<b>.</b>), так и запятая (<b>,</b>).</li>
+                                <li>Каждая строка в математическом выражении должна заканчиваться символом "точка с запятой" (<b>;</b>).</li>
+                                <li>Математическое выражение, завершившее выполнение с ошибкой, возвращает значение "<b>NaN</b>" или любое значение, заданное в директиве "<b>#error_value</b>".</li>
+                                <li>Любая необъявленная переменная в математическом выражении является <b>внешней переменной</b>.</li>
+                                <li>Если переменная содержит пробельные символы или символы операторов, то имя переменной необходимо экранировать прямоугольными скобками (<b>[имя переменной]</b>). Например: <b>[Press10-Press20]</b>.</li>
+                                <li>В математическом выражении допускаются комментарии двух видов. 1. <b>//</b> - комментарий до конца строки. 2. <b>/* ... */</b> - многострочный блок комментариев.</li>
+                            </ol>
+                        </div>
+                    </details>
+                    <!-- Константы и прочие операторы -->
+                    <details>
+                        <summary>Константы и прочие операторы</summary>
+                        <div selectable>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">№</th>
+                                        <th scope="col">Константа</th>
+                                        <th scope="col">Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>True</td>
+                                        <td>Истина (1)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>False</td>
+                                        <td>Ложь (0)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>break</td>
+                                        <td>Выход из цикла</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                    <!-- Арифметические операции -->
+                    <details>
+                        <summary>Арифметические операции</summary>
+                        <div selectable>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">№</th>
+                                        <th scope="col">Оператор</th>
+                                        <th scope="col">Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>+</td>
+                                        <td>Сложение</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>-</td>
+                                        <td>Вычитание</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>*</td>
+                                        <td>Умножение</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>/</td>
+                                        <td>Деление</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>++</td>
+                                        <td>Постфиксные операторы увеличения на 1 (с переменной)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">6</th>
+                                        <td>--</td>
+                                        <td>Постфиксные операторы уменьшения на 1 (с переменной)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">7</th>
+                                        <td>=</td>
+                                        <td>Присвоение (с переменной)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">8</th>
+                                        <td>+=</td>
+                                        <td>Сложение и присвоение (с переменной)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">9</th>
+                                        <td>-=</td>
+                                        <td>Вычитание и присвоение (с переменной)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">10</th>
+                                        <td>*=</td>
+                                        <td>Умножение и присвоение (с переменной)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">11</th>
+                                        <td>/=</td>
+                                        <td>Деление и присвоение (с переменной)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                    <!-- Операции сравнения и логические операции -->
+                    <details>
+                        <summary>Операции сравнения и логические операции</summary>
+                        <div selectable>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">№</th>
+                                        <th scope="col">Оператор</th>
+                                        <th scope="col">Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>&gt;</td>
+                                        <td>Больше</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>&lt;</td>
+                                        <td>Меньше</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>==</td>
+                                        <td>Равно</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>!=</td>
+                                        <td>Не равно</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>&gt;=</td>
+                                        <td>Больше или равно</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">6</th>
+                                        <td>&lt;=</td>
+                                        <td>Меньше или равно</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">7</th>
+                                        <td>&amp;&amp;</td>
+                                        <td>Логическое И</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">8</th>
+                                        <td>||</td>
+                                        <td>Логическое ИЛИ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                    <!-- Структура математического выражения -->
+                    <details>
+                        <summary>Структура математического выражения</summary>
+                        <div selectable>
+                            <p>Любое математическое выражение имеет следующую структуру:</p>
+                            <ol>
+                                <li><b>Директивы</b> - набор дополнительных опций математического выражения. Наличие не обязательно.</li>
+                                <li><b>Подключение внешних файлов</b> - инструкция include для включение в математическое выражение кода из внешнего файла. Наличие не обязательно.</li>
+                                <li><b>Функции</b> - блок объявления функций в математическом выражении. Наличие не обязательно.</li>
+                                <li><b>Переменные</b> - блок объявления локальных переменных в математическом выражении. Наличие не обязательно.</li>
+                                <li><b>Математическое выражение</b> - блок с самим математическим выражением. Наличие не обязательно.</li>
+                                <li><b>Результат</b> - переменная или последнее математическое выражение, значение которого будет считаться результатом выполнения математического выражения. <u>Наличие обязательно</u>.</li>
+                            </ol>
+                        </div>
+                    </details>
+                    <!-- Директивы -->
+                    <details>
+                        <summary>Директивы</summary>
+                        <div selectable>
+                            <p>В начале любого математического выражения можно задать дополнительные опции (<b>Директивы</b>), они влияют на выполнение математического выражения и имеют следующий формат записи: "<b>#имя директивы</b>".</p>
+                            <p>Поддерживаются следующие директивы:</p>
+                            <ul>
+                                <li><b>#error_value ЧИСЛО</b> - число (+/-) которое будет возвращать математическое выражение в случае возникновения ошибки/исключения во время выполнения. По умолчанию возвращается "<b>NaN</b>".</li>
+                                <li><b>#loop_limit ЧИСЛО</b> - данная опция/директива описывает максимальное количество итераций любого цикла в текущем математическом выражении. По умолчанию максимальное количество итерацию любого цикла в математическом выражении равно <b>65535</b>. По достижении данного лимита, цикл будет остановлен, а математическое выражение вернёт значение ошибки.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <!-- Подключение внешних файлов -->
+                    <details>
+                        <summary>Подключение внешних файлов</summary>
+                        <div selectable>
+                            <p>Для включении написанного ранее кода в математическое выражения необходимо использовать оператор <b>include</b></p>
+                            <p>Он имеет следующую структуру: <b>#include "ЗНАЧЕНИЕ"</b>, где <b>ЗНАЧЕНИЕ</b> - полное имя файла с расширением (если он находится в каталоге с исполняемым файлом программы) или абсолютный/относительный путь к файлу с расширением.</p>
+                            <p>При выполнении данного оператора, содержимое загружаемого файла будет добавлено в математическое выражение вместо оператора <b>include</b>.</p>
+                            <p><u>В конце оператора <b>include</b> символ завершения строки "<b>;</b>" не ставится.</u></p>
+                        </div>
+                    </details>
+                    <!-- Функции -->
+                    <details>
+                        <summary>Функции</summary>
+                        <div selectable>
+                            <p>После директив и подключения внешних файлов (если они есть) в математическом выражении можно описать набор функций.</p>
+                            <div><b>Синтаксис:</b></div>
+                            <pre>
+<span class="text-success">//
+// Объявление функции
+//</span>
+function <span class="text-success">ИМЯ ФУНКЦИИ</span> (<span class="text-success">Аргумента 1</span>, <span class="text-success">Аргумента 2</span>, <span class="text-success">Аргумента 3</span>...)
+{
+    Объявление переменных (не обязательно)
+    Блок с математическими выражениями (не обязательно)
+    Результат в виде последнего математического выражения или имя переменной
+}
+<span class="text-success">//
+// Вызов функции в математическом выражении
+//</span>
+<span class="text-success">ИМЯ ФУНКЦИИ</span> (<span class="text-success">Аргумента 1</span>; <span class="text-success">Аргумента 2</span>; <span class="text-success">Аргумента 3</span>...);
+                            </pre>
+                            <div class="note">
+                                <ol>
+                                    <li>Аргументы в функции могут отсутствовать.</li>
+                                    <li>Аргументы в функции перечисляются через запятую.</li>
+                                    <li>Количество аргументов в функции может быть неограниченное количество.</li>
+                                    <li>В теле функции аргументы считаются обычными переменными.</li>
+                                    <li>Имена аргументов и имена объявленных в теле функции переменных не должны совпадать между собой.</li>
+                                    <li>Функция всегда должна возвращать результат.</li>
+                                    <li>Допускается рекурсивный вызов функций. Лимит по глубине вызова для каждой функции составляет <b>65535d</b>(<b>0xffffh</b>) вызовов. При достижении данного лимита математическое выражение вернёт ошибку.</li>
+                                    <li>Допускается перегрузка функций. То есть, можно объявить несколько функций с одним и тем же именем, но с разным количеством аргументов.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </details>
+                    <!-- Переменные -->
+                    <details>
+                        <summary>Переменные</summary>
+                        <div selectable>
+                            <p>Переменные в математическом выражении позволяют хранить значения промежуточных расчетов. Переменные объявляются в начале математического выражения после директив и функций (если они имеются) и могут хранить только числовые значения.</p>
+                            <div><b>Синтаксис:</b></div>
+                            <pre>
+Var Имя переменной = Математическое выражение | Функция | (+-) Число
+                            </pre>
+                        </div>
+                    </details>
+                    <!-- Стандартные функции -->
+                    <details>
+                        <summary>Стандартные функции</summary>
+                        <div selectable>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">№</th>
+                                        <th scope="col">Функция</th>
+                                        <th scope="col">Синтаксис</th>
+                                        <th scope="col">Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Ln</td>
+                                        <td>Ln(Аргумент)</td>
+                                        <td>Натуральный логарифм</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Lg</td>
+                                        <td>Lg(Аргумент)</td>
+                                        <td>Десятичный логарифм</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Sin</td>
+                                        <td>Sin(Аргумент)</td>
+                                        <td>Синус (аргумент вводится в радианах)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>Cos</td>
+                                        <td>Cos(Аргумент)</td>
+                                        <td>Косинус (аргумент вводится в радианах)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>Tan</td>
+                                        <td>Tan(Аргумент)</td>
+                                        <td>Тангенс (аргумент вводится в радианах)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">6</th>
+                                        <td>CoTan</td>
+                                        <td>CoTan(Аргумент)</td>
+                                        <td>Котангенс (аргумент вводится в радианах)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">7</th>
+                                        <td>ASin</td>
+                                        <td>ASin(Аргумент)</td>
+                                        <td>Арксинус</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">8</th>
+                                        <td>ACos</td>
+                                        <td>ACos(Аргумент)</td>
+                                        <td>Арккосинус</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">9</th>
+                                        <td>ATan</td>
+                                        <td>ATan(Аргумент)</td>
+                                        <td>Арктангенс (аргумент вводится в радианах)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">10</th>
+                                        <td>SinH</td>
+                                        <td>SinH(Аргумент)</td>
+                                        <td>Гиперболический синус</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">11</th>
+                                        <td>CosH</td>
+                                        <td>CosH(Аргумент)</td>
+                                        <td>Гиперболический косинус</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">12</th>
+                                        <td>TanH</td>
+                                        <td>TanH(Аргумент)</td>
+                                        <td>Гиперболический тангенс</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">13</th>
+                                        <td>ASinH</td>
+                                        <td>ASinH(Аргумент)</td>
+                                        <td>Гиперболический арксинус</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">14</th>
+                                        <td>ACosH</td>
+                                        <td>ACosH(Аргумент)</td>
+                                        <td>Гиперболический арккосинус</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">15</th>
+                                        <td>ATanH</td>
+                                        <td>ATanH(Аргумент)</td>
+                                        <td>Гиперболический арктангенс</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">16</th>
+                                        <td>Abs</td>
+                                        <td>Abs(Аргумент)</td>
+                                        <td>Абсолютное значение</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">17</th>
+                                        <td>Sqrt</td>
+                                        <td>Sqrt(Аргумент)</td>
+                                        <td>Квадратный корень числа</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">18</th>
+                                        <td>Int</td>
+                                        <td>Int(Аргумент)</td>
+                                        <td>Выделяет целую часть числа</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">19</th>
+                                        <td>Frac</td>
+                                        <td>Frac(Аргумент)</td>
+                                        <td>Выделяет дробную часть числа</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">20</th>
+                                        <td>Sqr</td>
+                                        <td>Sqr(Аргумент)</td>
+                                        <td>Возводит аргумент в квадрат</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">21</th>
+                                        <td>Cube</td>
+                                        <td>Cube(Аргумент)</td>
+                                        <td>Возводит аргумент в кубическую степень</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">22</th>
+                                        <td>Round</td>
+                                        <td>Round(Аргумент)</td>
+                                        <td>Округляет число до ближайшего целого</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">23</th>
+                                        <td>Fact</td>
+                                        <td>Fact(Аргумент)</td>
+                                        <td>Факториал</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">24</th>
+                                        <td>Pow</td>
+                                        <td>Pow(Аргумент; Степень)</td>
+                                        <td>Возведение числа в степень</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">25</th>
+                                        <td>Inc</td>
+                                        <td>Inc(Аргумент1; Аргумент2)</td>
+                                        <td>Аргумент1 + Аргумент2</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">26</th>
+                                        <td>Dec</td>
+                                        <td>Dec(Аргумент1; Аргумент2)</td>
+                                        <td>Аргумент1 - Аргумент2</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">27</th>
+                                        <td>Sum</td>
+                                        <td>Sum(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Вычисляет сумму аргументов</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">28</th>
+                                        <td>Max</td>
+                                        <td>Max(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Определяет максимальное значение из аргументов</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">29</th>
+                                        <td>Min</td>
+                                        <td>Min(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Определяет минимальное значение из аргументов</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">30</th>
+                                        <td>Avg</td>
+                                        <td>Avg(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Рассчитывает среднее значение из аргументов</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">31</th>
+                                        <td>Prod</td>
+                                        <td>Prod(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Вычисляет произведение аргументов</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">32</th>
+                                        <td>Poly</td>
+                                        <td>Poly(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Расчёт значения с использованием коэффициентов полинома. <b>Аргумент1</b> - данные, <b>Аргумент2...</b> - коэффициенты полинома. <br/> Расчёт производится по формуле: <b>K6*x<sup>5</sup> + K5*x<sup>4</sup> + K4*x<sup>3</sup> + K3*x<sup>2</sup> + K2*x + K1</b> где: <b>k(x)</b> - коэффициенты полинома, <b>x</b> - данные</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">33</th>
+                                        <td>Pi</td>
+                                        <td>Pi()</td>
+                                        <td>Возвращает константу 3.14159265358979323846</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">34</th>
+                                        <td>ErrorValue</td>
+                                        <td>ErrorValue()</td>
+                                        <td>Возвращает значение директивы "<b>error_value</b>" или "<b>NaN</b>"</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">35</th>
+                                        <td>IsErrorValue</td>
+                                        <td>IsErrorValue(Аргумент)</td>
+                                        <td>Возвращает 1 если значение аргумента равно значению ErrorValue(), иначе 0.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">36</th>
+                                        <td>IfErrorValueDef</td>
+                                        <td>IfErrorValueDef(Аргумент1; Аргумент2)</td>
+                                        <td>Возвращает Аргумент2 если значение аргумента 1 равно значению ErrorValue().</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                    <!-- Оператор ветвления if -->
+                    <details>
+                        <summary>Оператор ветвления if</summary>
+                        <div selectable>
+
+                            <div><b>Синтаксис 1:</b></div>
+                            <pre type="text/html">
+if(<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>)
+{
+    Набор математических выражений выполняется, если условие истинно
+}
+else
+{
+    Набор математических выражений выполняется, если условие ложно
+}
+                            </pre>
+
+                            <div><b>Синтаксис 2:</b></div>
+                            <pre type="text/html">
+if(<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>)
+{
+    Набор математических выражений выполняется, если условие истинно
+}
+else if (<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>)
+{
+    Набор математических выражений выполняется, если условие истинно
+}
+else
+{
+    Набор математических выражений выполняется, если условие ложно
+}
+                            </pre>
+
+                            <div><b>Синтаксис 3:</b></div>
+                            <pre type="text/html">
+if(<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>)
+{
+    Набор математических выражений выполняется, если условие истинно.
+}
+                            </pre>
+
+                            <div><b>Синтаксис 4:</b></div>
+                            <pre type="text/html">
+if(<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>)
+    Одно математическое выражение выполняется, если условие истинно
+else
+    Одно математическое выражение выполняется, если условие ложно
+                            </pre>
+
+                            <div><b>Синтаксис 5:</b></div>
+                            <pre type="text/html">
+if(<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>)
+    Одно математическое выражение выполняется, если условие истинно
+else if (<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>)
+    Одно математическое выражение выполняется, если условие истинно
+else
+    Одно математическое выражение выполняется, если условие ложно
+                            </pre>
+
+                            <div><b>Синтаксис 6:</b></div>
+                            <pre type="text/html">
+if(<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>)
+    Одно математическое выражение выполняется, если условие истинно.
+                            </pre>
+
+                            <div class="note">
+                                <ol>
+                                    <li>Несколько конструкций "<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения</span> <span class="text-danger">Аргумент</span>" могут объединяться с помощью логических операторов (и - &amp;&amp; или - ||).</li>
+                                    <li>Количество конструкций <b>else if</b> не ограничено.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </details>
+                    <!-- Цикл while -->
+                    <details>
+                        <summary>Цикл while</summary>
+                        <div selectable>
+                            <div><b>Синтаксис:</b></div>
+                            <pre>
+while(<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>)
+{
+    Математическое выражение
+}
+                            </pre>
+                            <div class="note">
+                                <ol>
+                                    <li>Несколько конструкций "<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения</span> <span class="text-danger">Аргумент</span>" могут объединяться с помощью логических операторов (и - &amp;&amp; или - ||).</li>
+                                    <li>Максимальное количество итераций цикла по умолчанию <b>65535d</b>(<b>0xffffh</b>). Можно изменить с помощью директивы "<b>loop_limit</b>".</li>
+                                    <li>Для выход из цикла может использоваться оператор <b>break</b>.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </details>
+                    <!-- Цикл do while -->
+                    <details>
+                        <summary>Цикл do while</summary>
+                        <div selectable>
+                            <div><b>Синтаксис:</b></div>
+                            <pre class="border border-danger rounded bg-secondary-subtle p-3">
+do
+{
+    Математическое выражение
+}
+while(<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>)
+                            </pre>
+                            <div class="note">
+                                <ol>
+                                    <li>Несколько конструкций "<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения</span> <span class="text-danger">Аргумент</span>" могут объединяться с помощью логических операторов (и - &amp;&amp; или - ||).</li>
+                                    <li>Максимальное количество итераций цикла по умолчанию <b>65535d</b>(<b>0xffffh</b>). Можно изменить с помощью директивы "<b>loop_limit</b>".</li>
+                                    <li>Для выход из цикла может использоваться оператор <b>break</b>.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </details>
+                    <!-- Цикл for -->
+                    <details>
+                        <summary>Цикл for</summary>
+                        <div selectable>
+                            <div><b>Синтаксис 1:</b></div>
+                            <pre class="border border-danger rounded bg-secondary-subtle p-3">
+for(<span class="text-primary">Переменная</span> = <span class="text-danger">Аргумент</span>; <span class="text-danger">Аргумент</span> <span class="text-success">Сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>; <span class="text-primary">Переменная</span>++|--|-=|+=|*=|/=|=математическое выражение)
+{
+    Математическое выражение
+}
+                            </pre>
+                            <div><b>Синтаксис 2:</b></div>
+                            <pre class="border border-danger rounded bg-secondary-subtle p-3">
+for( ; <span class="text-danger">Аргумент</span> <span class="text-success">Сравнения или логическая операция</span> <span class="text-danger">Аргумент</span>; <span class="text-primary">Переменная</span>++|--|-=|+=|*=|/=|=математическое выражение)
+{
+    Математическое выражение
+}
+                            </pre>
+                            <div><b>Синтаксис 3:</b></div>
+                            <pre class="border border-danger rounded bg-secondary-subtle p-3">
+for( ; <span class="text-danger">Аргумент</span> <span class="text-success">Сравнения или логическая операция</span> <span class="text-danger">Аргумент</span> ; )
+{
+    Математическое выражение
+}
+                            </pre>
+                            <div class="note">
+                                <ol>
+                                    <li>Несколько конструкций "<span class="text-danger">Аргумент</span> <span class="text-success">Операция сравнения</span> <span class="text-danger">Аргумент</span>" могут объединяться с помощью логических операторов (и - &amp;&amp; или - ||).</li>
+                                    <li>Максимальное количество итераций цикла по умолчанию <b>65535d</b>(<b>0xffffh</b>). Можно изменить с помощью директивы "<b>loop_limit</b>".</li>
+                                    <li>Переменная++|--|-=|+=|*=|/=|=математическое выражение - доступна одна из перечисленных операций.</li>
+                                    <li>Для выход из цикла может использоваться оператор <b>break</b>.</li>
+                                </ol>
+                            </div>
+                    </div>
+                    </details>
+                    <!-- Глобальный массив -->
+                    <details>
+                        <summary>Глобальный массив</summary>
+                        <div selectable>
+                            <p>В математическом выражении поддерживается один глобальный массив с максимальной размерностью в <b>65535</b> элементов. Особенностью этого массива является то, что данные в нём сохраняются между выполнениями текущего математического выражения. То есть, если математическое выражение было проинициализировано, то выполнять его можно неограниченное количество раз. Результат расчёта можно хранить в глобальном массиве и использовать при последующих выполнениях математического выражения.</p>
+                            <div class="text-center"><b>Функции для работы с глобальным массивом</b> <br/></div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">№</th>
+                                        <th scope="col">Функция</th>
+                                        <th scope="col">Синтаксис</th>
+                                        <th scope="col">Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>void_ArrayInit</td>
+                                        <td>void_ArrayInit(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Очищает глобальный массив и добавляет в него новые элементы. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>void_ArrayInitIfEmpty</td>
+                                        <td>void_ArrayInitIfEmpty(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Добавляет в глобальный массив новые элементы только если массив пустой. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>ArraySize</td>
+                                        <td>ArraySize()</td>
+                                        <td>Возвращает количество элементов в глобальном массиве.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>void_ArrayPushBack</td>
+                                        <td>void_ArrayPushBack(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Функция добавляет в конец глобального массива новые элементы. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>void_ArrayPushFront</td>
+                                        <td>void_ArrayPushFront(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Функция добавляет в начало глобального массива новые элементы. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">6</th>
+                                        <td>void_ArrayPopBack</td>
+                                        <td>void_ArrayPopBack()</td>
+                                        <td>Функция удаляет из глобального массива последний элемент. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">7</th>
+                                        <td>void_ArrayPopFront</td>
+                                        <td>void_ArrayPopFront()</td>
+                                        <td>Функция удаляет из глобального массива первый элемент. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">8</th>
+                                        <td>void_ArrayAt</td>
+                                        <td>void_ArrayAt(Индекс; Аргумент)</td>
+                                        <td>Функция перезаписывает значение элемента в глобальном массиве. <b>Индекс</b> - индекс элемента в глобальном массиве, значение которого необходимо изменить. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">9</th>
+                                        <td>ArrayAt</td>
+                                        <td>ArrayAt(Индекс)</td>
+                                        <td>Функция возвращает значение элемента в глобальном массиве по индексу.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">10</th>
+                                        <td>ArrayFront</td>
+                                        <td>ArrayFront()</td>
+                                        <td>Функция возвращает значение первого элемента в глобальном массиве.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">11</th>
+                                        <td>ArrayBack</td>
+                                        <td>ArrayBack()</td>
+                                        <td>Функция возвращает значение последнего элемента в глобальном массиве.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">12</th>
+                                        <td>void_ArrayInsert</td>
+                                        <td>void_ArrayInsert(Индекс; Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Функция добавляет новые элементы в глобальный массив пред элементом с определённым индексом. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">13</th>
+                                        <td>void_ArrayErase</td>
+                                        <td>void_ArrayErase(Индекс)</td>
+                                        <td>Функция удаляет элемент с определённым индексом из глобального массива. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">14</th>
+                                        <td>void_ArrayErase</td>
+                                        <td>void_ArrayErase(Индекс1; Индекс2)</td>
+                                        <td>Функция удаляет диапазон элементов из глобального массива. <b>Индекс1</b> - индекс первого элемента. <b>Индекс2</b> - индекс последнего элемента (тоже удаляется). <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">15</th>
+                                        <td>void_ArrayEraseValue</td>
+                                        <td>void_ArrayEraseValue(Аргумент1; Аргумент2; Аргумент3; ...)</td>
+                                        <td>Функция удаляет из глобального массива все элементы значения которых совпадают со значениями переданными в функцию. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">16</th>
+                                        <td>void_ArrayResize</td>
+                                        <td>void_ArrayResize(Аргумент)</td>
+                                        <td>Функция изменяет текущий размер глобального массива. Удаляет элементы если размер массива превышает заданный или добавляет новые элементы если количество элементов в массиве меньше заданного (новые элементы имеют значение 0). <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">17</th>
+                                        <td>void_ArrayResize</td>
+                                        <td>void_ArrayResize(Аргумент1; Аргумент2)</td>
+                                        <td>Функция изменяет текущий размер глобального массива. Удаляет элементы если размер массива превышает значение Аргумента1 или добавляет новые элементы если количество элементов в массиве меньше значения Аргумента1. Новые элементы инициализируются значением переданным в Аргумент2. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">18</th>
+                                        <td>void_ArraySort</td>
+                                        <td>void_ArraySort()</td>
+                                        <td>Функция сортирует все элементы глобального массива по возрастанию. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">19</th>
+                                        <td>void_ArraySort</td>
+                                        <td>void_ArraySort(Индекс1; Индекс2)</td>
+                                        <td>Функция сортирует элементы глобального массива в диапазоне от Индекс1 до Индекс2 (включительно) по возрастанию. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">20</th>
+                                        <td>void_ArrayReverse</td>
+                                        <td>void_ArrayReverse()</td>
+                                        <td>Функция меняет порядок всех элементы глобального массива. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">21</th>
+                                        <td>void_ArrayReverse</td>
+                                        <td>void_ArrayReverse(Индекс1; Индекс2)</td>
+                                        <td>Функция меняет порядок элементов глобального массива  в диапазоне от Индекс1 до Индекс2 (включительно). <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">22</th>
+                                        <td>void_ArrayUnique</td>
+                                        <td>void_ArrayUnique()</td>
+                                        <td>Функция удаляет все элементы с повторяющимися значениями. <u>Функция не возвращает результат</u>.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">23</th>
+                                        <td>ArrayProd</td>
+                                        <td>ArrayProd()</td>
+                                        <td>Функция возвращает произведение всех элементов глобального массива.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">24</th>
+                                        <td>ArrayProd</td>
+                                        <td>ArrayProd(Индекс1; Индекс2)</td>
+                                        <td>Функция возвращает произведение элементов глобального массива в диапазоне от Индекс1 до Индекс2 (включительно).</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">25</th>
+                                        <td>ArrayAvg</td>
+                                        <td>ArrayAvg()</td>
+                                        <td>Функция возвращает среднее значение всех элементов глобального массива.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">26</th>
+                                        <td>ArrayAvg</td>
+                                        <td>ArrayAvg(Индекс1; Индекс2)</td>
+                                        <td>Функция возвращает среднее значение элементов глобального массива в диапазоне от Индекс1 до Индекс2 (включительно).</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">27</th>
+                                        <td>ArrayMin</td>
+                                        <td>ArrayMin()</td>
+                                        <td>Функция возвращает минимальное значение из всех элементов глобального массива.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">28</th>
+                                        <td>ArrayMin</td>
+                                        <td>ArrayMin(Индекс1; Индекс2)</td>
+                                        <td>Функция возвращает минимальное значение из элементов глобального массива в диапазоне от Индекс1 до Индекс2 (включительно).</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">29</th>
+                                        <td>ArrayMax</td>
+                                        <td>ArrayMax()</td>
+                                        <td>Функция возвращает максимальное значение из всех элементов глобального массива.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">30</th>
+                                        <td>ArrayMax</td>
+                                        <td>ArrayMax(Индекс1; Индекс2)</td>
+                                        <td>Функция возвращает максимальное значение из элементов глобального массива в диапазоне от Индекс1 до Индекс2 (включительно).</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">31</th>
+                                        <td>ArraySum</td>
+                                        <td>ArraySum()</td>
+                                        <td>Функция возвращает сумму всех элементов глобального массива.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">32</th>
+                                        <td>ArraySum</td>
+                                        <td>ArraySum(Индекс1; Индекс2)</td>
+                                        <td>Функция возвращает сумму элементов глобального массива в диапазоне от Индекс1 до Индекс2 (включительно).</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">33</th>
+                                        <td>ArrayPoly</td>
+                                        <td>ArrayPoly(Аргумент)</td>
+                                        <td>Расчёт значения с использованием коэффициентов полинома. <b>Аргумент</b> - данные. Все элементы глобального массива являются коэффициентами полинома. <br/> Расчёт производится по формуле: <b>K6*x<sup>5</sup> + K5*x<sup>4</sup> + K4*x<sup>3</sup> + K3*x<sup>2</sup> + K2*x + K1</b> где: <b>k(x)</b> - коэффициенты полинома, <b>x</b> - данные.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">34</th>
+                                        <td>ArrayPoly</td>
+                                        <td>ArrayPoly(Аргумент; Индекс1; Индекс2)</td>
+                                        <td>Расчёт значения с использованием коэффициентов полинома. <b>Аргумент</b> - данные. <b>Индекс1, Индекс2 (включительно)</b> - диапазон элементов в глобальном массиве, которые будут использоваться как коэффициенты полинома. <br/> Расчёт производится по формуле: <b>K6*x<sup>5</sup> + K5*x<sup>4</sup> + K4*x<sup>3</sup> + K3*x<sup>2</sup> + K2*x + K1</b> где: <b>k(x)</b> - коэффициенты полинома, <b>x</b> - данные.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                </section>
+                <!-- ВКЛАДКА ПРИМЕРЫ -->
+                <section(examples)#examples-tab>
+                    <!-- Осреднение -->
+                    <details>
+                        <summary>Осреднение</summary>
+                        <div>
+                            <pre type="text/calc++" selectable>
+/*
+* Осреднение по трём внешним переменным.
+*/
+avg(Press001; [2P002]; [Давление 3 - Integer32]);
+                            </pre>
+                        </div>
+                    </details>
+                    <!-- Факториал 1 -->
+                    <details>
+                        <summary>Факториал 1</summary>
+                        <div>
+                            <pre type="text/calc++" selectable>
+/*
+* Расчёт факториала из внешней переменной Press001.
+* Код ниже можно заменить на код с использованием стандартных функций:
+* Fact(Int(Press001));
+*/
+var result = 0;
+var value = int(Press001); // Берём целую часть числа
+//
+// При отрицательном значении value возвращаем ошибку
+//
+if (value &lt; 0)
+    result = 0;
+else if (value == 0) // Факториал 0 всегда 1
+    result = 1;
+else // Расчёт факториала
+{
+    while(value &gt; 0)
+    {
+        if (result == 0)
+        {
+            result = value;
+        }
+        else
+        {
+            result = result * value;
+        }
+        value--;
+    }
+}
+//
+// Вывод результата
+//
+result;
+                            </pre>
+                        </div>
+                    </details>
+                    <!-- Факториал 2 -->
+                    <details>
+                        <summary>Факториал 2</summary>
+                        <div>
+                            <pre type="text/calc++" selectable>
+/*
+* Расчёт факториала из внешней переменной Press001.
+* Код ниже можно заменить на код с использованием стандартных функций:
+* Fact(Int(Press001));
+*/
+//
+// Объявление функции для расчёта факториала
+//
+function __fact(value)
+{
+    var result;
+
+    if (value &lt; 0)
+        result = 0;
+    else if (value == 0)
+        result = 1;
+    else
+        result = value * __fact(value - 1);
+
+    result;
+}
+//
+// Объявление вспомогательной функции для расчёта факториала для целой части числа
+//
+function _fact(value)
+{
+    __fact(Int(value));
+}
+//
+// Расчёт факториала
+//
+_fact(Press001);
+                            </pre>
+                        </div>
+                    </details>
+                    <!-- Полином 1 -->
+                    <details>
+                        <summary>Полином 1</summary>
+                        <div>
+                            <pre type="text/calc++" selectable>
+/*
+* Расчёт температуры из милливольтов в градусы цельсия для термопар ТХА(хромель-алюмель тип К) и Т(медь).
+* Холодный спай 0.
+* Value - милливольты, входное значение.
+* Type - флаг термопары. Если больше 0 расчёт по типу "Т", если 0 по типу "ТХА".
+* ТХА: 2.023mv = 50С°; 3.474mv = 85С°; 4.096mv = 100С°; 5.124mv = 125С°; 6.138mv = 150С°; 7.541mv = 185С°; 8.138mv = 200С°; -0.392mv = -10С°;
+* Т: 2.036mv = 50С°; 3.585mv = 85С°; 4.279mv = 100С°; 5.47mv = 125С°; 6.704mv = 150С°; 8.497mv = 185С°; 9.288mv = 200С°; -2.94mv = -85С°;
+*/
+//
+// Перевод милливольтов в микровольты
+//
+var x = Value * 1000;
+//
+// Переменная для хранения результата
+//
+var result = ErrorValue();
+//
+// Расчёт по тиу "Т"
+//
+if (Type &gt; 0)
+{
+    result = 2.5928000e-2*x +
+            -7.602961e-7*pow(x;2) +
+            4.637791e-11*pow(x;3) +
+            -2.165394e-15*pow(x;4) +
+            6.048144E-20*pow(x;5) +
+            -7.293422e-25*pow(x;6);
+}
+else // Расчёт по типу "ТХА"
+{
+    result =  sum(prod(2.508355E-2; x);
+                prod(7.860106E-8; pow(x;2));
+                prod(-2.503131E-10; pow(x;3));
+                prod(8.315270E-14; pow(x;4)) ;
+                prod(-1.228034E-17; pow(x;5));
+                prod(9.804036E-22; pow(x;6));
+                prod(-4.413030E-26; pow(x;7));
+                prod(1.057734E-30; pow(x;8));
+                prod(-1.052755E-35; pow(x;9)));
+}
+//
+// Вывод результата
+//
+result;
+                            </pre>
+                        </div>
+                    </details>
+                    <!-- Полином 2 -->
+                    <details>
+                        <summary>Полином 2</summary>
+                        <div>
+                            <pre type="text/calc++" selectable>
+/*
+* Расчёт температуры из милливольтов в градусы цельсия для термопар ТХА(хромель-алюмель тип К) и Т(медь).
+* Холодный спай 0.
+* Value - милливольты, входное значение.
+* Type - флаг термопары. Если больше 0 расчёт по типу "Т", если 0 по типу "ТХА".
+* ТХА: 2.023mv = 50С°; 3.474mv = 85С°; 4.096mv = 100С°; 5.124mv = 125С°; 6.138mv = 150С°; 7.541mv = 185С°; 8.138mv = 200С°; -0.392mv = -10С°;
+* Т: 2.036mv = 50С°; 3.585mv = 85С°; 4.279mv = 100С°; 5.47mv = 125С°; 6.704mv = 150С°; 8.497mv = 185С°; 9.288mv = 200С°; -2.94mv = -85С°;
+*/
+var result = 0;
+var x = Value * 1000; // Перевод милливольтов в микровольты
+//
+// Инициализация глобального массива
+//
+void_ArrayInitIfEmpty(
+/*Тип Т*/       0.0;  2.5928000e-2; -7.602961e-7;  4.637791e-11; -2.165394e-15; 6.048144E-20; -7.293422e-25; /*6*/
+/*Тип ТХА*/     0.0; 2.508355E-2; 7.860106E-8; -2.503131E-10; 8.315270E-14; -1.228034E-17; 9.804036E-22; -4.413030E-26; 1.057734E-30; -1.052755E-35
+);
+//
+// Расчёт по тиу "Т"
+//
+if (Type)
+    result = ArrayPoly(x; 0; 6);
+else // Расчёт по типу "ТХА"
+    result = ArrayPoly(x; 7; ArraySize() - 1);
+//
+// Вывод результата
+//
+result;
+                            </pre>
+                        </div>
+                    </details>
+                    <!-- Полином 3 -->
+                    <details>
+                        <summary>Полином 3</summary>
+                        <div>
+                            <pre type="text/calc++" selectable>
+//
+// Расчёт с использование коэффициентов полинома в глобальном массиве
+//
+function _CaclPoly(Begin, X)
+{
+    var result = 0;
+    var i = Begin + 1;	// Второй коэффициент в массиве
+    //
+    // Вспомогательные переменные
+    //
+    var coeff_2 = i;
+    var sub_x = X;
+    //
+    // Расчёт
+    //
+    if (ArraySize() &gt; Begin)
+    {
+        result = ArrayAt(Begin);
+
+        for (; i &lt; ArraySize(); i++)
+        {
+            if (i &gt; coeff_2)
+            {
+                sub_x *= X;
+            }
+            result = result + ArrayAt(i) * sub_x;
+        }
+    }
+    else // Коэффициентов полинома нет
+    {
+        result = X;
+    }
+    //
+    // Вывод результата
+    //
+    result;
+}
+//
+// ПЕРЕГРУЗКА ФУНКЦИИ CalcPoly
+// Набор функций для расчёта значения с разным количеством коэффициентов полинома
+//
+function CalcPoly(X, Coeff1, Coeff2, Coeff3, Coeff4, Coeff5, Coeff6, Coeff7)
+{
+    var result;
+    var Begin = ArraySize();
+
+    void_ArrayPushBack(Coeff1; Coeff2; Coeff3; Coeff4; Coeff5; Coeff6; Coeff7);
+
+    result = _CaclPoly(Begin; X);
+
+    void_ArrayErase(Begin; ArraySize() - 1);
+
+    result;
+}
+
+function CalcPoly(X, Coeff1, Coeff2, Coeff3, Coeff4, Coeff5, Coeff6, Coeff7, Coeff8, Coeff9, Coeff10)
+{
+    var result;
+    var Begin = ArraySize();
+
+    void_ArrayPushBack(Coeff1; Coeff2; Coeff3; Coeff4; Coeff5; Coeff6; Coeff7; Coeff8; Coeff9; Coeff10);
+    
+    result = _CaclPoly(Begin; X);
+
+    void_ArrayErase(Begin; ArraySize() - 1);
+
+    result;
+}
+/*
+* Расчёт температуры из милливольтов в градусы цельсия для термопар ТХА(хромель-алюмель тип К) и Т(медь).
+* Холодный спай 0.
+* Value - милливольты, входное значение.
+* Type - флаг термопары. Если больше 0 расчёт по типу "Т", если 0 по типу "ТХА".
+* ТХА: 2.023mv = 50С°; 3.474mv = 85С°; 4.096mv = 100С°; 5.124mv = 125С°; 6.138mv = 150С°; 7.541mv = 185С°; 8.138mv = 200С°; -0.392mv = -10С°;
+* Т: 2.036mv = 50С°; 3.585mv = 85С°; 4.279mv = 100С°; 5.47mv = 125С°; 6.704mv = 150С°; 8.497mv = 185С°; 9.288mv = 200С°; -2.94mv = -85С°;
+*/
+var result = 0;
+var x = Value * 1000; // Перевод милливольтов в микровольты
+//
+// Расчёт по тиу "Т"
+//
+if (Type)
+{
+    result = CalcPoly(x; 0.0;  2.5928000e-2; -7.602961e-7;  4.637791e-11; -2.165394e-15; 6.048144E-20; -7.293422e-25);
+}
+else // Расчёт по типу "ТХА"
+{
+    result = CalcPoly(x; 0.0; 2.508355E-2; 7.860106E-8; -2.503131E-10; 8.315270E-14; -1.228034E-17; 9.804036E-22; -4.413030E-26; 1.057734E-30; -1.052755E-35);
+}
+//
+// Вывод результата
+//
+result;
+                            </pre>
+                        </div>
+                    </details>
+                </section>
+                <!-- МАТЕМАТИЧЕСКОЕ ВЫРАЖЕНИЕ -->
+                <section(math-input)#math-input-tab>
+                    <div>
+                        <div#load_math-exp.button title="Загрузить математическое выражение из файла"></div>
+                        <div#save_math-exp.button title="Сохранить математическое выражение в файл"></div>
+                        <div#parse-math-exp.button title="Нажмите, чтобы проверить математическое выражение на наличие ошибок">ПРОВЕРИТЬ МАТЕМАТИЧЕСКОЕ ВЫРАЖЕНИЕ</div>
+                    </div>
+                    <plaintext#code-editor type="text/calc++"></plaintext>
+                    <div>Результат проверки:</div>
+                    <pre#code-check-result selectable></pre>
+                </section>
+                <!-- ДЕРЕВО РАЗБОРА -->
+                <section(parse-tree)#parse-tree-tab>
+                    <select|tree treelines></select>
+                </section>
+                <!-- ВЫПОЛНИТЬ МАТЕМАТИЧЕСКОЕ ВЫРАЖЕНИЕ -->
+                <section(run-math)#run-math>
+                    <div><b>Глобальный массив:</b></div>
+                    <div#array-viewer>
+                        <label>0</label>
+                        <input|integer value="0" min="0" max="65534" step="1" filter="0123456789" />
+                        <ul></ul>
+                    </div>
+                    <div><b>Внешние переменные:</b></div>
+                    <table#external-id>
+                        <thead>
+                            <tr>
+                                <th>ИМЯ ПЕРЕМЕННОЙ</th>
+                                <th>ЗНАЧЕНИЕ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div#result-panel>
+                        <div selectable>---</div>
+                        <div.button>ВЫПОЛНИТЬ</div>
+                    </div>
+                </section>
+            </panels>
+        </tabs>
+    </body>
+</html>

@@ -1,0 +1,713 @@
+/*------------------------------------------------------------------------------*/
+/* #region КОНСТАНТЫ И БАЗОВЫЕ СТИЛИ*/
+/*------------------------------------------------------------------------------*/
+@const WINDOW_BORDER_COLOR: #fab397;
+@const BACKGROUND_BUTTON_HOVER_COLOR: rgba(135, 206, 250, 0.400);
+@const BACKGROUND_BUTTON_ACTIVE_COLOR: rgba(135, 206, 250, 0.600);
+@const BUTTON_FONT_SIZE: 1.2em;
+@const BUTTON_IMG_SIZE: 70dip;
+/*------------------------------------------------------------------------------*/
+.text-center
+{
+    text-align: center;
+}
+
+.fw-bold
+{
+    font-weight: bold;
+}
+
+.text-danger
+{
+    color: red;
+}
+
+.text-success
+{
+    color: green;
+}
+
+.text-primary
+{
+    color: cornflowerblue;
+}
+/*------------------------------------------------------------------------------*/
+/*
+Смотри структуру меню:
+https://sciter.com/forums/topic/context-menu-icon/
+*/
+menu > li:hover > span
+{
+    color: black;
+}
+
+menu > li:hover
+{
+    background-color: @WINDOW_BORDER_COLOR;
+}
+
+menu > li[command="edit:undo"] > label
+{
+    content: "Отменить";
+}
+
+menu > li[command="edit:cut"] > label
+{
+    content: "Вырезать";
+}
+
+menu > li[command="edit:copy"] > label
+{
+    content: "Копировать";
+}
+
+menu > li[command="edit:paste"] > label
+{
+    content: "Вставить";
+}
+
+menu > li[command="edit:selectall"] > label
+{
+    content: "Выделить всё";
+}
+
+/*------------------------------------------------------------------------------*/
+@set colorizer < std-plaintext-numbers
+{
+    :root
+    {
+        aspect: colorize url(./../widgets/colorizer.js);
+        /* overflow: scroll-indicator; */
+        background: rgba(192, 192, 192, 0.2);
+        font-family: monospace;
+        font-size: 14pt;
+        color: black;
+        text-selection: white cornflowerblue !important;
+        border-radius: 5dip;
+        tab-size: 3;
+        overflow-x: scroll/*-indicator*/ !important;
+        overflow-y: scroll-indicator !important;
+    }
+
+    text
+    {
+        border-left: 2dip solid rgba(255, 68, 0, 0.6);
+        padding-left: 10dip;
+        margin-left: 3em !important;
+        background: #fafaff;
+        white-space: pre !important;
+    }
+
+    text:first-child { padding-top: 10dip !important; }
+
+    text::highlight(number) { color: darkred; }
+    text::highlight(operator) { color: darkblue; }
+    text::highlight(keyword) { color: blue; font-weight: bold; }
+    text::highlight(string) { color: brown; }
+    text::highlight(literal) { color: orangered; }
+    text::highlight(comment) { color: green; }
+    text::highlight(identifier) { color: teal; font-style: italic; }
+    text::highlight(build_in_func) { color: darkmagenta; font-style: italic; font-weight: bold; }
+    text::highlight(function_name) { color: teal; font-style: italic; font-weight: bold; }
+}
+/*------------------------------------------------------------------------------*/
+@set pre-colorizer
+{
+    :root
+    {
+        aspect: colorize url(./../widgets/colorizer.js);
+        margin: 0;
+        margin-bottom: 15dip;
+        border: 1px solid darkred;
+        border-radius: 5px;
+        background-color: rgba(192, 192, 192, 0.2);
+        padding: 10dip;
+        overflow-x: auto;
+        color: black;
+    }
+
+    :root::highlight(number) { color: darkred; }
+    :root::highlight(operator) { color: darkblue; }
+    :root::highlight(keyword) { color: blue; font-weight: bold; }
+    :root::highlight(string) { color: brown; }
+    :root::highlight(literal) { color: orangered; }
+    :root::highlight(comment) { color: green; }
+    :root::highlight(identifier) { color: teal; font-style: italic; }
+    :root::highlight(build_in_func) { color: darkmagenta; font-style: italic; font-weight: bold; }
+    :root::highlight(function_name) { color: teal; font-style: italic; font-weight: bold; }
+}
+/*------------------------------------------------------------------------------*/
+/* КНОПКА */
+div.button
+{
+    padding: 5dip;
+    border: 2dip solid gray;
+    border-radius: 4dip;
+    color: black;
+    font-weight: bold;
+    font-size: @BUTTON_FONT_SIZE;
+    vertical-align: middle;
+    flow: horizontal;
+    background-color: rgba(255, 228, 196, 0.2);
+}
+
+img.button
+{
+    display: block;
+    padding: 5dip;
+    border: 2dip solid gray;
+    border-radius: 4dip;
+    background-color: rgba(255, 228, 196, 0.2);
+}
+
+    .button.disabled
+    {
+        color: silver;
+        background-color: rgba(192, 192, 192, 0.2);
+    }
+
+    .button:not(.disabled):hover
+    {
+        background-color: @BACKGROUND_BUTTON_HOVER_COLOR;
+    }
+
+    .button:not(.disabled):active
+    {
+        background-color: @BACKGROUND_BUTTON_ACTIVE_COLOR;
+    }
+/*------------------------------------------------------------------------------*/
+input > caption
+{
+    text-selection: white cornflowerblue !important;
+}
+/*------------------------------------------------------------------------------*/
+/* #endregion */
+/*------------------------------------------------------------------------------*/
+/* #region ЗАГОЛОВКА-ОКНА */
+/*------------------------------------------------------------------------------*/
+html
+{
+    border: window-frame-width solid silver;
+}
+
+    html > header
+    {
+        margin: 0;
+        border-bottom: 2dip solid @WINDOW_BORDER_COLOR;
+        background: linear-gradient(0deg, #cfecd08c, #a0cea7, #9ec0db);
+        width: *;
+        height: max-content;
+        flow: horizontal;
+    }
+
+        html > header > img
+        {
+            display: block;
+            width: auto;
+            height: auto;
+            padding: 5dip;
+        }
+
+        html > header > window-caption
+        {
+            display: block;
+            color: black;
+            font-size: 1.3em;
+            font-style: normal;
+            font-weight: normal;
+            text-align: center;
+            vertical-align: middle; /*Необходимо использовать line-height:window-caption-height, но vertical-align: middle тоже работает*/
+            width: *;
+            height: *;
+        }
+
+        html > header > window-buttons
+        {
+            display: block;
+            flow: horizontal;
+            width: max-content;
+            height: *;
+        }
+
+        html > header > window-buttons > window-button
+        {
+            display: block;
+            behavior: clickable;
+            width: /*window-button-width*/40dip;
+            height: *;
+            foreground-size: 11dip;
+            foreground-repeat: no-repeat;
+            foreground-position: 50% 50%;
+            stroke: color(text-color);
+            stroke-width: 1dip;
+            stroke: black;
+            transition: background-color linear 100ms;
+        }
+
+            html > header > window-buttons > window-button:hover
+            {
+                background: rgba(0,0,0,0.25);
+            }
+
+        html > header > window-buttons > window-button[role="window-close"]
+        {
+            stroke-width: 1.44dip;
+            foreground-image: url(path:M0 0 L10 10 M10 0 L0 10);
+        }
+
+            html > header > window-buttons > window-button[role="window-close"]:hover
+            {
+                background: rgb(232,17,35);
+                stroke: #fff;
+            }
+
+        html > header > window-buttons > window-button[role="window-maximize"]
+        {
+            foreground-image: url(path:M0 0 H10 V10 H0 Z);
+        }
+
+        html > header > window-buttons > window-button[role="window-minimize"]
+        {
+            foreground-image: url(path:M0 0 H10 V1 H0 Z);
+        }
+
+html[window-state="maximized"]
+{
+    border-color: transparent;
+}
+
+    html[window-state="maximized"] > header > window-buttons > window-button[role="window-maximize"]
+    {
+        foreground-image: url(path:M0 2 h8 v8 h-8 Z M2 2 v-2 h8 v8 h-2);
+    }
+
+    html > body
+    {
+        margin: 0 5dip 5dip 5dip;
+        background-color: white;
+        flow: vertical;
+    }
+/*------------------------------------------------------------------------------*/
+/* #endregion */
+/*------------------------------------------------------------------------------*/
+/* #region ОСНОВНАЯ ПАНЕЛЬ - БЛОК ВКЛАДОК */
+/*------------------------------------------------------------------------------*/
+#main-tabs-panel
+{
+    padding-top: 5dip;
+    min-height: 100dip;
+}
+
+    #main-tabs-panel > strip > label
+    {
+        border-top-left-radius: 5dip;
+        border-top-right-radius: 5dip;
+        padding-bottom: 10dip;
+        white-space: no-wrap;
+        font-size: @BUTTON_FONT_SIZE;
+    }
+
+    #main-tabs-panel > strip > label:current
+    {
+        font-weight: bold;
+    }
+
+    #main-tabs-panel > panels > section
+    {
+        box-shadow: none;
+        overflow-y: hidden;
+    }
+/*------------------------------------------------------------------------------*/
+/* #endregion */
+/*------------------------------------------------------------------------------*/
+/* #region ОПИСАНИЕ */
+/*------------------------------------------------------------------------------*/
+#description-tab
+{
+    overflow-y: scroll-indicator !important;
+}
+
+    #description-tab div.main_label
+    {
+        margin-bottom: 5dip;
+        padding: 20dip;
+        font-weight: bold;
+        font-style: italic;
+        font-size: 1.8em;
+        color: cornsilk;
+        text-align: center;
+        background: linear-gradient(left right, rgba(121,166,248, 0.1), rgba(121,166,248, 0.8), rgba(121,166,248,1), rgba(121,166,248, 0.8), rgba(121,166,248, 0.1));
+        border: 1dip dotted cornflowerblue;
+        box-shadow: 0 5dip 5dip -5dip rgba(34, 60, 80, 0.6);
+        user-select: none;
+        cursor: default;
+    }
+
+    #description-tab > details
+    {
+        margin: 0;
+        padding: 0;
+        margin-bottom: 5dip;
+    }
+
+        #description-tab > details:last-of-type
+        {
+            margin-bottom: 0;
+        }
+
+        #description-tab > details > summary
+        {
+            fill:green;
+            border: 2dip solid silver;
+            padding: 10dip 25dip;
+            background-color: rgba(192, 192, 192, 0.5);
+            background-image: url(icon:i-plus);
+            background-size: 1.5em;
+            background-position: top 50% left 0.1em;
+            font-style: italic;
+            font-size: 1.5em !important;
+            cursor: default;
+        }
+
+            #description-tab > details:expanded > summary
+            {
+                fill:red;
+                background-image: url(icon:i-minus);
+            }
+        
+        #description-tab > details > div
+        {
+            padding: 5px;
+            font-size: 1.5em;
+        }
+
+    #description-tab ul,
+    #description-tab ol
+    {
+        margin: 0;
+    }
+
+        #description-tab ul > li,
+        #description-tab ol > li
+        {
+            margin: 10dip 0;
+        }
+
+    #description-tab table
+    {
+        text-align: center;
+        width: *;
+        border-spacing: 0;
+        border-collapse: collapse;
+        border: 1dip solid silver;
+    }
+
+        #description-tab table > thead th
+        {
+            background-color: rgba(192, 192, 192, 0.2);
+        }
+
+        #description-tab table th
+        {
+            font-weight: bold;
+        }
+
+        #description-tab table th,
+        #description-tab table td
+        {
+            padding: 10dip;
+            border: 1dip solid silver;
+        }
+
+    #description-tab p
+    {
+        text-indent: 15dip;
+    }
+
+    #description-tab pre
+    {
+        margin: 0;
+        margin-bottom: 15dip;
+        border: 1px solid darkred;
+        border-radius: 5px;
+        background-color: rgba(192, 192, 192, 0.2);
+        padding: 10dip;
+        overflow-x: auto;
+    }
+
+    #description-tab div.note
+    {
+        margin-top: 10px;
+        padding: 50px 0 10px 50px;
+        position: relative;
+        font-style: italic;
+        border-top: 1px solid gray;
+        border-bottom: 1px solid gray;
+    }
+
+        #description-tab div.note:before
+        {
+            display: block;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-weight: bold;
+            content: "Примечание:";
+        }
+/*------------------------------------------------------------------------------*/
+/* #endregion */
+/*------------------------------------------------------------------------------*/
+/* #region ПРИМЕРЫ */
+/*------------------------------------------------------------------------------*/
+#examples-tab
+{
+    overflow-y: scroll-indicator !important;
+}
+
+    #examples-tab > details
+    {
+        margin: 0;
+        padding: 0;
+        margin-bottom: 5dip;
+    }
+
+        #examples-tab > details:last-of-type
+        {
+            margin-bottom: 0;
+        }
+
+        #examples-tab > details > summary
+        {
+            fill:green;
+            border: 2dip solid silver;
+            padding: 10dip 25dip;
+            background-color: rgba(192, 192, 192, 0.5);
+            background-image: url(icon:i-plus);
+            background-size: 1.5em;
+            background-position: top 50% left 0.1em;
+            font-style: italic;
+            font-size: 1.5em !important;
+            cursor: default;
+        }
+
+            #examples-tab > details:expanded > summary
+            {
+                fill:red;
+                background-image: url(icon:i-minus);
+            }
+
+    #examples-tab > details > div
+    {
+        padding: 5px;
+        font-size: 1.5em;
+    }
+
+    #examples-tab > details > div > pre[type]
+    {
+        style-set: pre-colorizer;
+    }
+/*------------------------------------------------------------------------------*/
+/* #endregion */
+/*------------------------------------------------------------------------------*/
+/* #region ВВОД МАТЕМАТИЧЕСКОГО ВЫРАЖЕНИЯ */
+/*------------------------------------------------------------------------------*/
+#math-input-tab > div:first-of-type
+{
+    flow: horizontal;
+}
+
+#math-input-tab #load_math-exp
+{
+    fill: gray;
+    size: 1.3em;
+    margin-right: 5dip;
+    background-image: url(icon:internal);
+    background-position: top 50% left 50%;
+}
+
+#math-input-tab #save_math-exp
+{
+    fill: gray;
+    size: 1.3em;
+    margin-right: 5dip;
+    background-image: url(icon:external);
+    background-position: top 50% left 50%;
+}
+
+#math-input-tab #parse-math-exp
+{
+    margin-left: *;
+    width: max-content;
+}
+
+#math-input-tab > plaintext[type]#code-editor
+{
+    margin: 5dip 0;
+    style-set: colorizer;
+}
+
+#math-input-tab > div:last-of-type
+{
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+#math-input-tab > pre#code-check-result
+{
+    height: 100dip;
+    margin: 0;
+    border: 1px solid darkred;
+    border-radius: 5px;
+    background-color: rgba(192, 192, 192, 0.2);
+    padding: 10dip;
+    overflow: scroll-indicator;
+}
+/*------------------------------------------------------------------------------*/
+/* #endregion */
+/*------------------------------------------------------------------------------*/
+/* #region ДЕРЕВО РАЗБОРА */
+/*------------------------------------------------------------------------------*/
+#parse-tree-tab select[type=tree]
+{
+    display: block;
+    border-radius: 5dip;
+    font-size: 1.5em;
+    margin: 0;
+    padding: 0;
+    size: *;
+}
+/*------------------------------------------------------------------------------*/
+/* #endregion */
+/*------------------------------------------------------------------------------*/
+/* #region Вкладка "ВЫПОЛНИТЬ" */
+/*------------------------------------------------------------------------------*/
+#run-math
+{
+    font-size: 1.2em;
+    overflow-y: scroll-indicator !important;
+}
+
+    #run-math #array-viewer
+    {
+        margin: 0;
+        margin-bottom: 15dip;
+        padding: 0 5dip;
+        height: 85dip;
+        border: 1px solid darkred;
+        border-radius: 5px;
+        background-color: rgba(192, 192, 192, 0.2);
+        flow: horizontal;
+    }
+
+            #run-math #array-viewer > *
+            {
+                height: max-content;
+                margin-left: 5dip;
+                margin-top: *;
+                margin-bottom: *;
+                padding: 0;
+            }
+
+            #run-math #array-viewer > label
+            {
+                font-size: 1.3em;
+                font-weight: bold;
+            }
+
+            #run-math #array-viewer > ul
+            {
+                display: block;
+                padding: 0 5dip;
+                height: 65dip;
+                width: *;
+                list-style-type: none;
+                border: 2dip solid gray;
+                border-radius: 5dip;
+                flow: horizontal;
+                overflow-x: scroll-indicator;
+            }
+
+                #run-math #array-viewer > ul > li
+                {
+                    display: block;
+                    margin-top: *;
+                    margin-bottom: *;
+                    margin-left: 5dip;
+                    padding: 5dip;
+                    width: max-content;
+                    height: max-content;
+                    border: 1dip solid silver;
+                    border-radius: 4dip;
+                    text-align: center;
+                    min-width: 50dip;
+                }
+
+                    #run-math #array-viewer > ul > li:first-of-type
+                    {
+                        margin-left: 0;
+                    }
+
+    #run-math table#external-id
+    {
+        font-size: 1.2em;
+        text-align: center;
+        width: *;
+        border-spacing: 0;
+        border-collapse: collapse;
+        /* border: 1dip solid silver; */
+    }
+
+        #run-math table#external-id > thead th
+        {
+            background-color: rgba(192, 192, 192, 0.2);
+        }
+
+        #run-math table#external-id th
+        {
+            font-weight: bold;
+        }
+
+        #run-math table#external-id th,
+        #run-math table#external-id td
+        {
+            padding: 10dip;
+            border: 1dip solid silver;
+        }
+
+        #run-math table#external-id > tbody > tr > td:last-of-type
+        {
+            behavior: edit;
+            context-menu:url(sciter:menu-edit.htm);
+            flow: text;
+            white-space: pre;
+        }
+
+        #run-math #result-panel
+        {
+            margin: *;
+            padding: 20dip;
+            width:max-content;
+            flow: vertical;
+        }
+
+            #run-math #result-panel > div:first-of-type
+            {
+                margin-left: *;
+                margin-right: *;
+                margin-bottom: 50dip;
+                text-transform: uppercase;
+                text-align: center;
+                font-size: 2em;
+                font-weight: bold;
+                width: max-content;
+            }
+
+            #run-math #result-panel > div:last-of-type
+            {
+                margin-left: *;
+                margin-right: *;
+                width: max-content;
+            }
+/*------------------------------------------------------------------------------*/
+/* #endregion */
+/*------------------------------------------------------------------------------*/

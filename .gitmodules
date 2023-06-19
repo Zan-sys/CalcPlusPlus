@@ -1,0 +1,6 @@
+[submodule "lib/sciter-js-sdk"]
+	path = lib/sciter-js-sdk
+	url = https://gitlab.com/sciter-engine/sciter-js-sdk.git
+[submodule "lib/RE-flex"]
+	path = lib/RE-flex
+	url = https://github.com/Genivia/RE-flex.git
