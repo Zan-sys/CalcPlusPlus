@@ -6,3 +6,6 @@
 
 # generated files
 project-config.hpp
+
+# sciter resources
+/src/gui_resources.cpp
