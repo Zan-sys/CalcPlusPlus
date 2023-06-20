@@ -662,6 +662,11 @@ variable_function   : '(' math_expression ')'   { $$ = $2; }
                     | invoke_user_functions     { $$ = $1; }
                     | '-' NUMBER                { $$ = std::make_shared<TActionNode>($2 * -1); }
                     | NUMBER                    { $$ = std::make_shared<TActionNode>($1); }
+                    | '-' IDENTIFIER            {
+                                                    $$ = std::make_shared<TActionNode>(TActionType::Multiplication);
+                                                    $$->AddNode(std::make_shared<TActionNode>(TActionType::Identifier, $2));
+                                                    $$->AddNode(std::make_shared<TActionNode>(double(-1)));
+                                                }
                     | IDENTIFIER                { $$ = std::make_shared<TActionNode>(TActionType::Identifier, $1); }
                     | TRUE_CONST                { $$ = std::make_shared<TActionNode>(TActionType::True); }
                     | FALSE_CONST               { $$ = std::make_shared<TActionNode>(TActionType::False); }

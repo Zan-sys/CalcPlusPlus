@@ -1436,32 +1436,42 @@ namespace CalcPlusPlus {
 #line 1437 "parser.cpp"
     break;
 
-  case 70: // variable_function: "Identifier"
+  case 70: // variable_function: '-' "Identifier"
 #line 665 "./_parser_bison.y"
+                                                {
+                                                    yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Multiplication);
+                                                    yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(std::make_shared<TActionNode>(double(-1)));
+                                                    yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(std::make_shared<TActionNode>(TActionType::Identifier, yystack_[0].value.as < std::string > ()));
+                                                }
+#line 1447 "parser.cpp"
+    break;
+
+  case 71: // variable_function: "Identifier"
+#line 670 "./_parser_bison.y"
                                                 { yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Identifier, yystack_[0].value.as < std::string > ()); }
-#line 1443 "parser.cpp"
+#line 1453 "parser.cpp"
     break;
 
-  case 71: // variable_function: "true"
-#line 666 "./_parser_bison.y"
+  case 72: // variable_function: "true"
+#line 671 "./_parser_bison.y"
                                                 { yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::True); }
-#line 1449 "parser.cpp"
+#line 1459 "parser.cpp"
     break;
 
-  case 72: // variable_function: "false"
-#line 667 "./_parser_bison.y"
+  case 73: // variable_function: "false"
+#line 672 "./_parser_bison.y"
                                                 { yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::False); }
-#line 1455 "parser.cpp"
+#line 1465 "parser.cpp"
     break;
 
-  case 73: // function_argument: math_expression
-#line 673 "./_parser_bison.y"
+  case 74: // function_argument: math_expression
+#line 678 "./_parser_bison.y"
                                         { yylhs.value.as < std::shared_ptr<TActionNode> > () = yystack_[0].value.as < std::shared_ptr<TActionNode> > (); }
-#line 1461 "parser.cpp"
+#line 1471 "parser.cpp"
     break;
 
-  case 74: // function_arguments: function_arguments ';' math_expression
-#line 679 "./_parser_bison.y"
+  case 75: // function_arguments: function_arguments ';' math_expression
+#line 684 "./_parser_bison.y"
                                                                 {
                                                                     if (yystack_[2].value.as < std::shared_ptr<TActionNode> > () == nullptr)
                                                                     {
@@ -1473,688 +1483,688 @@ namespace CalcPlusPlus {
                                                                     }
                                                                     yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[0].value.as < std::shared_ptr<TActionNode> > ());
                                                                 }
-#line 1477 "parser.cpp"
+#line 1487 "parser.cpp"
     break;
 
-  case 75: // function_arguments: math_expression
-#line 690 "./_parser_bison.y"
+  case 76: // function_arguments: math_expression
+#line 695 "./_parser_bison.y"
                                                                 {
                                                                     yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::FunctionArguments);
                                                                     yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[0].value.as < std::shared_ptr<TActionNode> > ());
                                                                 }
-#line 1486 "parser.cpp"
+#line 1496 "parser.cpp"
     break;
 
-  case 76: // build_in_function: "Pi" '(' ')'
-#line 699 "./_parser_bison.y"
+  case 77: // build_in_function: "Pi" '(' ')'
+#line 704 "./_parser_bison.y"
                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Pi); }
-#line 1492 "parser.cpp"
+#line 1502 "parser.cpp"
     break;
 
-  case 77: // build_in_function: "ErrorValue" '(' ')'
-#line 700 "./_parser_bison.y"
+  case 78: // build_in_function: "ErrorValue" '(' ')'
+#line 705 "./_parser_bison.y"
                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ErrorValue); }
-#line 1498 "parser.cpp"
+#line 1508 "parser.cpp"
     break;
 
-  case 78: // build_in_function: "IsErrorValue" '(' function_argument ')'
-#line 701 "./_parser_bison.y"
+  case 79: // build_in_function: "IsErrorValue" '(' function_argument ')'
+#line 706 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::IsErrorValue);
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
-                                                                                            }
-#line 1507 "parser.cpp"
-    break;
-
-  case 79: // build_in_function: "IfErrorValueDef" '(' function_argument ';' function_argument ')'
-#line 705 "./_parser_bison.y"
-                                                                                            {
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::IfErrValueDef);
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
 #line 1517 "parser.cpp"
     break;
 
-  case 80: // build_in_function: "Ln" '(' function_argument ')'
+  case 80: // build_in_function: "IfErrorValueDef" '(' function_argument ';' function_argument ')'
 #line 710 "./_parser_bison.y"
+                                                                                            {
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::IfErrValueDef);
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
+                                                                                            }
+#line 1527 "parser.cpp"
+    break;
+
+  case 81: // build_in_function: "Ln" '(' function_argument ')'
+#line 715 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Ln);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1526 "parser.cpp"
+#line 1536 "parser.cpp"
     break;
 
-  case 81: // build_in_function: "Lg" '(' function_argument ')'
-#line 714 "./_parser_bison.y"
+  case 82: // build_in_function: "Lg" '(' function_argument ')'
+#line 719 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Lg);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1535 "parser.cpp"
+#line 1545 "parser.cpp"
     break;
 
-  case 82: // build_in_function: "Sin" '(' function_argument ')'
-#line 718 "./_parser_bison.y"
+  case 83: // build_in_function: "Sin" '(' function_argument ')'
+#line 723 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Sin);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1544 "parser.cpp"
+#line 1554 "parser.cpp"
     break;
 
-  case 83: // build_in_function: "Cos" '(' function_argument ')'
-#line 722 "./_parser_bison.y"
+  case 84: // build_in_function: "Cos" '(' function_argument ')'
+#line 727 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Cos);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1553 "parser.cpp"
+#line 1563 "parser.cpp"
     break;
 
-  case 84: // build_in_function: "Tan" '(' function_argument ')'
-#line 726 "./_parser_bison.y"
+  case 85: // build_in_function: "Tan" '(' function_argument ')'
+#line 731 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Tan);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1562 "parser.cpp"
+#line 1572 "parser.cpp"
     break;
 
-  case 85: // build_in_function: "CoTan" '(' function_argument ')'
-#line 730 "./_parser_bison.y"
+  case 86: // build_in_function: "CoTan" '(' function_argument ')'
+#line 735 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::CoTan);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1571 "parser.cpp"
+#line 1581 "parser.cpp"
     break;
 
-  case 86: // build_in_function: "Sec" '(' function_argument ')'
-#line 734 "./_parser_bison.y"
+  case 87: // build_in_function: "Sec" '(' function_argument ')'
+#line 739 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Sec);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1580 "parser.cpp"
+#line 1590 "parser.cpp"
     break;
 
-  case 87: // build_in_function: "Csc" '(' function_argument ')'
-#line 738 "./_parser_bison.y"
+  case 88: // build_in_function: "Csc" '(' function_argument ')'
+#line 743 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Csc);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1589 "parser.cpp"
+#line 1599 "parser.cpp"
     break;
 
-  case 88: // build_in_function: "ASin" '(' function_argument ')'
-#line 742 "./_parser_bison.y"
+  case 89: // build_in_function: "ASin" '(' function_argument ')'
+#line 747 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ASin);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1598 "parser.cpp"
+#line 1608 "parser.cpp"
     break;
 
-  case 89: // build_in_function: "ACos" '(' function_argument ')'
-#line 746 "./_parser_bison.y"
+  case 90: // build_in_function: "ACos" '(' function_argument ')'
+#line 751 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ACos);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1607 "parser.cpp"
+#line 1617 "parser.cpp"
     break;
 
-  case 90: // build_in_function: "ATan" '(' function_argument ')'
-#line 750 "./_parser_bison.y"
+  case 91: // build_in_function: "ATan" '(' function_argument ')'
+#line 755 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ATan);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1616 "parser.cpp"
+#line 1626 "parser.cpp"
     break;
 
-  case 91: // build_in_function: "ACoTan" '(' function_argument ')'
-#line 754 "./_parser_bison.y"
+  case 92: // build_in_function: "ACoTan" '(' function_argument ')'
+#line 759 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ACoTan);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1625 "parser.cpp"
+#line 1635 "parser.cpp"
     break;
 
-  case 92: // build_in_function: "ASec" '(' function_argument ')'
-#line 758 "./_parser_bison.y"
+  case 93: // build_in_function: "ASec" '(' function_argument ')'
+#line 763 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ASec);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1634 "parser.cpp"
+#line 1644 "parser.cpp"
     break;
 
-  case 93: // build_in_function: "ACsc" '(' function_argument ')'
-#line 762 "./_parser_bison.y"
+  case 94: // build_in_function: "ACsc" '(' function_argument ')'
+#line 767 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ACsc);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1643 "parser.cpp"
+#line 1653 "parser.cpp"
     break;
 
-  case 94: // build_in_function: "SinH" '(' function_argument ')'
-#line 766 "./_parser_bison.y"
+  case 95: // build_in_function: "SinH" '(' function_argument ')'
+#line 771 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::SinH);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1652 "parser.cpp"
+#line 1662 "parser.cpp"
     break;
 
-  case 95: // build_in_function: "CosH" '(' function_argument ')'
-#line 770 "./_parser_bison.y"
+  case 96: // build_in_function: "CosH" '(' function_argument ')'
+#line 775 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::CosH);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1661 "parser.cpp"
+#line 1671 "parser.cpp"
     break;
 
-  case 96: // build_in_function: "TanH" '(' function_argument ')'
-#line 774 "./_parser_bison.y"
+  case 97: // build_in_function: "TanH" '(' function_argument ')'
+#line 779 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::TanH);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1670 "parser.cpp"
+#line 1680 "parser.cpp"
     break;
 
-  case 97: // build_in_function: "ASinH" '(' function_argument ')'
-#line 778 "./_parser_bison.y"
+  case 98: // build_in_function: "ASinH" '(' function_argument ')'
+#line 783 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ASinH);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1679 "parser.cpp"
+#line 1689 "parser.cpp"
     break;
 
-  case 98: // build_in_function: "ACosH" '(' function_argument ')'
-#line 782 "./_parser_bison.y"
+  case 99: // build_in_function: "ACosH" '(' function_argument ')'
+#line 787 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ACosH);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1688 "parser.cpp"
+#line 1698 "parser.cpp"
     break;
 
-  case 99: // build_in_function: "ATanH" '(' function_argument ')'
-#line 786 "./_parser_bison.y"
+  case 100: // build_in_function: "ATanH" '(' function_argument ')'
+#line 791 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ATanH);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1697 "parser.cpp"
+#line 1707 "parser.cpp"
     break;
 
-  case 100: // build_in_function: "Abs" '(' function_argument ')'
-#line 790 "./_parser_bison.y"
+  case 101: // build_in_function: "Abs" '(' function_argument ')'
+#line 795 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Abs);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1706 "parser.cpp"
+#line 1716 "parser.cpp"
     break;
 
-  case 101: // build_in_function: "Sqrt" '(' function_argument ')'
-#line 794 "./_parser_bison.y"
+  case 102: // build_in_function: "Sqrt" '(' function_argument ')'
+#line 799 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Sqrt);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1715 "parser.cpp"
+#line 1725 "parser.cpp"
     break;
 
-  case 102: // build_in_function: "Int" '(' function_argument ')'
-#line 798 "./_parser_bison.y"
+  case 103: // build_in_function: "Int" '(' function_argument ')'
+#line 803 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Int);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1724 "parser.cpp"
+#line 1734 "parser.cpp"
     break;
 
-  case 103: // build_in_function: "Frac" '(' function_argument ')'
-#line 802 "./_parser_bison.y"
+  case 104: // build_in_function: "Frac" '(' function_argument ')'
+#line 807 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Frac);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1733 "parser.cpp"
+#line 1743 "parser.cpp"
     break;
 
-  case 104: // build_in_function: "Sqr" '(' function_argument ')'
-#line 806 "./_parser_bison.y"
+  case 105: // build_in_function: "Sqr" '(' function_argument ')'
+#line 811 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Sqr);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1742 "parser.cpp"
+#line 1752 "parser.cpp"
     break;
 
-  case 105: // build_in_function: "Cube" '(' function_argument ')'
-#line 810 "./_parser_bison.y"
+  case 106: // build_in_function: "Cube" '(' function_argument ')'
+#line 815 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Cube);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1751 "parser.cpp"
+#line 1761 "parser.cpp"
     break;
 
-  case 106: // build_in_function: "Round" '(' function_argument ')'
-#line 814 "./_parser_bison.y"
+  case 107: // build_in_function: "Round" '(' function_argument ')'
+#line 819 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Round);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 1760 "parser.cpp"
+#line 1770 "parser.cpp"
     break;
 
-  case 107: // build_in_function: "Fact" '(' function_argument ')'
-#line 818 "./_parser_bison.y"
+  case 108: // build_in_function: "Fact" '(' function_argument ')'
+#line 823 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Fact);
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
-                                                                                            }
-#line 1769 "parser.cpp"
-    break;
-
-  case 108: // build_in_function: "Pow" '(' function_argument ';' function_argument ')'
-#line 822 "./_parser_bison.y"
-                                                                                            {
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Pow);
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
 #line 1779 "parser.cpp"
     break;
 
-  case 109: // build_in_function: "Inc" '(' function_argument ';' function_argument ')'
+  case 109: // build_in_function: "Pow" '(' function_argument ';' function_argument ')'
 #line 827 "./_parser_bison.y"
                                                                                             {
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Inc);
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Pow);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
 #line 1789 "parser.cpp"
     break;
 
-  case 110: // build_in_function: "Dec" '(' function_argument ';' function_argument ')'
+  case 110: // build_in_function: "Inc" '(' function_argument ';' function_argument ')'
 #line 832 "./_parser_bison.y"
                                                                                             {
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Dec);
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Inc);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
 #line 1799 "parser.cpp"
     break;
 
-  case 111: // build_in_function: "Sum" '(' function_arguments ')'
+  case 111: // build_in_function: "Dec" '(' function_argument ';' function_argument ')'
 #line 837 "./_parser_bison.y"
+                                                                                            {
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Dec);
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
+                                                                                            }
+#line 1809 "parser.cpp"
+    break;
+
+  case 112: // build_in_function: "Sum" '(' function_arguments ')'
+#line 842 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Sum);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 1808 "parser.cpp"
+#line 1818 "parser.cpp"
     break;
 
-  case 112: // build_in_function: "Max" '(' function_arguments ')'
-#line 841 "./_parser_bison.y"
+  case 113: // build_in_function: "Max" '(' function_arguments ')'
+#line 846 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Max);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 1817 "parser.cpp"
+#line 1827 "parser.cpp"
     break;
 
-  case 113: // build_in_function: "Min" '(' function_arguments ')'
-#line 845 "./_parser_bison.y"
+  case 114: // build_in_function: "Min" '(' function_arguments ')'
+#line 850 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Min);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 1826 "parser.cpp"
+#line 1836 "parser.cpp"
     break;
 
-  case 114: // build_in_function: "Avg" '(' function_arguments ')'
-#line 849 "./_parser_bison.y"
+  case 115: // build_in_function: "Avg" '(' function_arguments ')'
+#line 854 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Avg);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 1835 "parser.cpp"
+#line 1845 "parser.cpp"
     break;
 
-  case 115: // build_in_function: "Prod" '(' function_arguments ')'
-#line 853 "./_parser_bison.y"
+  case 116: // build_in_function: "Prod" '(' function_arguments ')'
+#line 858 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Prod);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 1844 "parser.cpp"
+#line 1854 "parser.cpp"
     break;
 
-  case 116: // build_in_function: "Poly" '(' function_arguments ')'
-#line 857 "./_parser_bison.y"
+  case 117: // build_in_function: "Poly" '(' function_arguments ')'
+#line 862 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Poly);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 1853 "parser.cpp"
+#line 1863 "parser.cpp"
     break;
 
-  case 117: // result_array_functions: "ArraySize" '(' ')'
-#line 866 "./_parser_bison.y"
+  case 118: // result_array_functions: "ArraySize" '(' ')'
+#line 871 "./_parser_bison.y"
                                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArraySize); }
-#line 1859 "parser.cpp"
+#line 1869 "parser.cpp"
     break;
 
-  case 118: // result_array_functions: "ArrayAt" '(' function_argument ')'
-#line 867 "./_parser_bison.y"
+  case 119: // result_array_functions: "ArrayAt" '(' function_argument ')'
+#line 872 "./_parser_bison.y"
                                                                                                             {
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayAt);
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                             }
-#line 1868 "parser.cpp"
+#line 1878 "parser.cpp"
     break;
 
-  case 119: // result_array_functions: "ArrayFront" '(' ')'
-#line 871 "./_parser_bison.y"
+  case 120: // result_array_functions: "ArrayFront" '(' ')'
+#line 876 "./_parser_bison.y"
                                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayFront); }
-#line 1874 "parser.cpp"
+#line 1884 "parser.cpp"
     break;
 
-  case 120: // result_array_functions: "ArrayBack" '(' ')'
-#line 872 "./_parser_bison.y"
+  case 121: // result_array_functions: "ArrayBack" '(' ')'
+#line 877 "./_parser_bison.y"
                                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayBack); }
-#line 1880 "parser.cpp"
+#line 1890 "parser.cpp"
     break;
 
-  case 121: // result_array_functions: "ArrayProd" '(' ')'
-#line 873 "./_parser_bison.y"
+  case 122: // result_array_functions: "ArrayProd" '(' ')'
+#line 878 "./_parser_bison.y"
                                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayProd); }
-#line 1886 "parser.cpp"
+#line 1896 "parser.cpp"
     break;
 
-  case 122: // result_array_functions: "ArrayProd" '(' function_argument ';' function_argument ')'
-#line 874 "./_parser_bison.y"
+  case 123: // result_array_functions: "ArrayProd" '(' function_argument ';' function_argument ')'
+#line 879 "./_parser_bison.y"
                                                                                                             {
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayProd);
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                             }
-#line 1896 "parser.cpp"
+#line 1906 "parser.cpp"
     break;
 
-  case 123: // result_array_functions: "ArrayAvg" '(' ')'
-#line 879 "./_parser_bison.y"
+  case 124: // result_array_functions: "ArrayAvg" '(' ')'
+#line 884 "./_parser_bison.y"
                                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayAvg); }
-#line 1902 "parser.cpp"
+#line 1912 "parser.cpp"
     break;
 
-  case 124: // result_array_functions: "ArrayAvg" '(' function_argument ';' function_argument ')'
-#line 880 "./_parser_bison.y"
+  case 125: // result_array_functions: "ArrayAvg" '(' function_argument ';' function_argument ')'
+#line 885 "./_parser_bison.y"
                                                                                                             {
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayAvg);
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                             }
-#line 1912 "parser.cpp"
+#line 1922 "parser.cpp"
     break;
 
-  case 125: // result_array_functions: "ArrayMin" '(' ')'
-#line 885 "./_parser_bison.y"
+  case 126: // result_array_functions: "ArrayMin" '(' ')'
+#line 890 "./_parser_bison.y"
                                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayMin); }
-#line 1918 "parser.cpp"
+#line 1928 "parser.cpp"
     break;
 
-  case 126: // result_array_functions: "ArrayMin" '(' function_argument ';' function_argument ')'
-#line 886 "./_parser_bison.y"
+  case 127: // result_array_functions: "ArrayMin" '(' function_argument ';' function_argument ')'
+#line 891 "./_parser_bison.y"
                                                                                                             {
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayMin);
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                             }
-#line 1928 "parser.cpp"
+#line 1938 "parser.cpp"
     break;
 
-  case 127: // result_array_functions: "ArrayMax" '(' ')'
-#line 891 "./_parser_bison.y"
+  case 128: // result_array_functions: "ArrayMax" '(' ')'
+#line 896 "./_parser_bison.y"
                                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayMax); }
-#line 1934 "parser.cpp"
+#line 1944 "parser.cpp"
     break;
 
-  case 128: // result_array_functions: "ArrayMax" '(' function_argument ';' function_argument ')'
-#line 892 "./_parser_bison.y"
+  case 129: // result_array_functions: "ArrayMax" '(' function_argument ';' function_argument ')'
+#line 897 "./_parser_bison.y"
                                                                                                             {
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayMax);
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                             }
-#line 1944 "parser.cpp"
+#line 1954 "parser.cpp"
     break;
 
-  case 129: // result_array_functions: "ArraySum" '(' ')'
-#line 897 "./_parser_bison.y"
+  case 130: // result_array_functions: "ArraySum" '(' ')'
+#line 902 "./_parser_bison.y"
                                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArraySum); }
-#line 1950 "parser.cpp"
+#line 1960 "parser.cpp"
     break;
 
-  case 130: // result_array_functions: "ArraySum" '(' function_argument ';' function_argument ')'
-#line 898 "./_parser_bison.y"
+  case 131: // result_array_functions: "ArraySum" '(' function_argument ';' function_argument ')'
+#line 903 "./_parser_bison.y"
                                                                                                             {
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArraySum);
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                             }
-#line 1960 "parser.cpp"
+#line 1970 "parser.cpp"
     break;
 
-  case 131: // result_array_functions: "ArrayPoly" '(' function_argument ')'
-#line 903 "./_parser_bison.y"
+  case 132: // result_array_functions: "ArrayPoly" '(' function_argument ')'
+#line 908 "./_parser_bison.y"
                                                                                                             {
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayPoly);
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                             }
-#line 1969 "parser.cpp"
+#line 1979 "parser.cpp"
     break;
 
-  case 132: // result_array_functions: "ArrayPoly" '(' function_argument ';' function_argument ';' function_argument ')'
-#line 907 "./_parser_bison.y"
+  case 133: // result_array_functions: "ArrayPoly" '(' function_argument ';' function_argument ';' function_argument ')'
+#line 912 "./_parser_bison.y"
                                                                                                             {
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::ArrayPoly);
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[5].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                             }
-#line 1980 "parser.cpp"
+#line 1990 "parser.cpp"
     break;
 
-  case 133: // void_array_function: "void_ArrayInit" '(' function_arguments ')'
-#line 918 "./_parser_bison.y"
+  case 134: // void_array_function: "void_ArrayInit" '(' function_arguments ')'
+#line 923 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayInit);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 1989 "parser.cpp"
+#line 1999 "parser.cpp"
     break;
 
-  case 134: // void_array_function: "ArrayInitIfEmpty" '(' function_arguments ')'
-#line 922 "./_parser_bison.y"
+  case 135: // void_array_function: "ArrayInitIfEmpty" '(' function_arguments ')'
+#line 927 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayInitIfEmpty);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 1998 "parser.cpp"
+#line 2008 "parser.cpp"
     break;
 
-  case 135: // void_array_function: "void_ArrayClear" '(' ')'
-#line 926 "./_parser_bison.y"
+  case 136: // void_array_function: "void_ArrayClear" '(' ')'
+#line 931 "./_parser_bison.y"
                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayClear); }
-#line 2004 "parser.cpp"
+#line 2014 "parser.cpp"
     break;
 
-  case 136: // void_array_function: "void_ArrayPushBack" '(' function_arguments ')'
-#line 927 "./_parser_bison.y"
+  case 137: // void_array_function: "void_ArrayPushBack" '(' function_arguments ')'
+#line 932 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayPushBack);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 2013 "parser.cpp"
+#line 2023 "parser.cpp"
     break;
 
-  case 137: // void_array_function: "void_ArrayPushFront" '(' function_arguments ')'
-#line 931 "./_parser_bison.y"
+  case 138: // void_array_function: "void_ArrayPushFront" '(' function_arguments ')'
+#line 936 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayPushFront);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 2022 "parser.cpp"
+#line 2032 "parser.cpp"
     break;
 
-  case 138: // void_array_function: "void_ArrayPopBack" '(' ')'
-#line 935 "./_parser_bison.y"
+  case 139: // void_array_function: "void_ArrayPopBack" '(' ')'
+#line 940 "./_parser_bison.y"
                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayPopBack); }
-#line 2028 "parser.cpp"
+#line 2038 "parser.cpp"
     break;
 
-  case 139: // void_array_function: "void_ArrayPopFront" '(' ')'
-#line 936 "./_parser_bison.y"
+  case 140: // void_array_function: "void_ArrayPopFront" '(' ')'
+#line 941 "./_parser_bison.y"
                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayPopFront); }
-#line 2034 "parser.cpp"
+#line 2044 "parser.cpp"
     break;
 
-  case 140: // void_array_function: "void_ArrayAt" '(' function_argument ';' function_argument ')'
-#line 937 "./_parser_bison.y"
+  case 141: // void_array_function: "void_ArrayAt" '(' function_argument ';' function_argument ')'
+#line 942 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayAt);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 2044 "parser.cpp"
+#line 2054 "parser.cpp"
     break;
 
-  case 141: // void_array_function: "void_ArrayInsert" '(' function_argument ';' function_arguments ')'
-#line 942 "./_parser_bison.y"
+  case 142: // void_array_function: "void_ArrayInsert" '(' function_argument ';' function_arguments ')'
+#line 947 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayInsert);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNodes(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 2054 "parser.cpp"
+#line 2064 "parser.cpp"
     break;
 
-  case 142: // void_array_function: "void_ArrayErase" '(' function_argument ')'
-#line 947 "./_parser_bison.y"
+  case 143: // void_array_function: "void_ArrayErase" '(' function_argument ')'
+#line 952 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayErase);
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
-                                                                                            }
-#line 2063 "parser.cpp"
-    break;
-
-  case 143: // void_array_function: "void_ArrayErase" '(' function_argument ';' function_argument ')'
-#line 951 "./_parser_bison.y"
-                                                                                            {
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayErase);
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
 #line 2073 "parser.cpp"
     break;
 
-  case 144: // void_array_function: "void_ArrayEraseValue" '(' function_arguments ')'
+  case 144: // void_array_function: "void_ArrayErase" '(' function_argument ';' function_argument ')'
 #line 956 "./_parser_bison.y"
+                                                                                            {
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayErase);
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
+                                                                                            }
+#line 2083 "parser.cpp"
+    break;
+
+  case 145: // void_array_function: "void_ArrayEraseValue" '(' function_arguments ')'
+#line 961 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayEraseValue);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                                             }
-#line 2082 "parser.cpp"
+#line 2092 "parser.cpp"
     break;
 
-  case 145: // void_array_function: "void_ArrayResize" '(' function_argument ')'
-#line 960 "./_parser_bison.y"
+  case 146: // void_array_function: "void_ArrayResize" '(' function_argument ')'
+#line 965 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayResize);
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
-                                                                                            }
-#line 2091 "parser.cpp"
-    break;
-
-  case 146: // void_array_function: "void_ArrayResize" '(' function_argument ';' function_argument ')'
-#line 964 "./_parser_bison.y"
-                                                                                            {
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayResize);
-                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
 #line 2101 "parser.cpp"
     break;
 
-  case 147: // void_array_function: "void_ArraySort" '(' ')'
+  case 147: // void_array_function: "void_ArrayResize" '(' function_argument ';' function_argument ')'
 #line 969 "./_parser_bison.y"
-                                                                                            {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArraySort); }
-#line 2107 "parser.cpp"
+                                                                                            {
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayResize);
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
+                                                                                                yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
+                                                                                            }
+#line 2111 "parser.cpp"
     break;
 
-  case 148: // void_array_function: "void_ArraySort" '(' function_argument ';' function_argument ')'
-#line 970 "./_parser_bison.y"
+  case 148: // void_array_function: "void_ArraySort" '(' ')'
+#line 974 "./_parser_bison.y"
+                                                                                            {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArraySort); }
+#line 2117 "parser.cpp"
+    break;
+
+  case 149: // void_array_function: "void_ArraySort" '(' function_argument ';' function_argument ')'
+#line 975 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArraySort);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 2117 "parser.cpp"
+#line 2127 "parser.cpp"
     break;
 
-  case 149: // void_array_function: "void_ArrayReverse" '(' ')'
-#line 975 "./_parser_bison.y"
+  case 150: // void_array_function: "void_ArrayReverse" '(' ')'
+#line 980 "./_parser_bison.y"
                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayReverse); }
-#line 2123 "parser.cpp"
+#line 2133 "parser.cpp"
     break;
 
-  case 150: // void_array_function: "void_ArrayReverse" '(' function_argument ';' function_argument ')'
-#line 976 "./_parser_bison.y"
+  case 151: // void_array_function: "void_ArrayReverse" '(' function_argument ';' function_argument ')'
+#line 981 "./_parser_bison.y"
                                                                                             {
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayReverse);
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[3].value.as < std::shared_ptr<TActionNode> > ());
                                                                                                 yylhs.value.as < std::shared_ptr<TActionNode> > ()->AddNode(yystack_[1].value.as < std::shared_ptr<TActionNode> > ());
                                                                                             }
-#line 2133 "parser.cpp"
+#line 2143 "parser.cpp"
     break;
 
-  case 151: // void_array_function: "void_ArrayUnique" '(' ')'
-#line 981 "./_parser_bison.y"
+  case 152: // void_array_function: "void_ArrayUnique" '(' ')'
+#line 986 "./_parser_bison.y"
                                                                                             {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::Void_ArrayUnique); }
-#line 2139 "parser.cpp"
+#line 2149 "parser.cpp"
     break;
 
-  case 152: // invoke_user_functions: "Identifier" '(' ')'
-#line 987 "./_parser_bison.y"
+  case 153: // invoke_user_functions: "Identifier" '(' ')'
+#line 992 "./_parser_bison.y"
                                                                 {   yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::InvokeFunction, yystack_[2].value.as < std::string > ()); }
-#line 2145 "parser.cpp"
+#line 2155 "parser.cpp"
     break;
 
-  case 153: // invoke_user_functions: "Identifier" '(' function_arguments ')'
-#line 988 "./_parser_bison.y"
+  case 154: // invoke_user_functions: "Identifier" '(' function_arguments ')'
+#line 993 "./_parser_bison.y"
                                                                 {
                                                                     yylhs.value.as < std::shared_ptr<TActionNode> > () = std::make_shared<TActionNode>(TActionType::InvokeFunction, yystack_[3].value.as < std::string > ());
                                                                     yylhs.value.as < std::shared_ptr<TActionNode> > ()->Nodes = std::move(yystack_[1].value.as < std::shared_ptr<TActionNode> > ()->Nodes);
                                                                 }
-#line 2154 "parser.cpp"
+#line 2164 "parser.cpp"
     break;
 
 
-#line 2158 "parser.cpp"
+#line 2168 "parser.cpp"
 
             default:
               break;
@@ -2506,61 +2516,61 @@ namespace CalcPlusPlus {
   }
 
 
-  const short TParser::yypact_ninf_ = -336;
+  const short TParser::yypact_ninf_ = -337;
 
   const signed char TParser::yytable_ninf_ = -1;
 
   const short
   TParser::yypact_[] =
   {
-      -5,    25,    13,    48,    74,    61,    55,  -336,    66,    83,
-      48,    -5,  -336,   105,  -336,   154,   149,   409,   174,  -336,
-    -336,  -336,    49,    98,  -336,    68,   203,  1149,  -336,  -336,
-     200,   204,   111,   206,   207,   208,   209,   210,   212,   213,
-     214,   215,   217,   219,   220,   222,   223,   225,   226,   227,
-     228,   229,   230,   231,   232,   233,   234,   235,   238,   255,
-     256,   257,   259,   260,   263,   265,   276,   277,   278,   279,
-     280,   282,   283,   285,   287,   288,   289,   291,   292,   293,
-     294,   295,   296,   298,   299,   300,   301,   303,   305,   307,
-     309,   313,   314,   315,   316,   317,   318,   319,   320,   321,
-    -336,   409,   409,   323,   325,  -336,    33,   -57,   109,   120,
-    -336,  -336,   327,  -336,    83,  -336,   196,    -6,  1149,   509,
-    -336,  -336,  1149,  1149,  1149,  1149,  1149,  -336,   328,   202,
-    1149,  1149,  1211,    43,   326,   329,  1149,  1149,  1149,  1149,
-    1149,  1149,  1149,  1149,  1149,  1149,  1149,  1149,  1149,  1149,
-    1149,  1149,  1149,  1149,  1149,  1149,  1149,  1149,  1149,  1149,
-    1149,  1149,  1149,  1149,  1149,  1149,  1149,  1149,  1149,  1149,
-    1149,  1149,  1149,  1149,  1149,  1149,  1149,   330,   332,  1149,
-    1149,   333,   334,  1149,  1149,   335,   336,  1149,  1149,  1149,
-    1149,   589,   337,   669,   749,   829,   909,   989,  1069,  1149,
-    -336,  -336,   409,  -336,  1149,  1149,  1149,  1149,  1149,  1149,
-    1149,  1149,  1149,  1149,  1149,  1149,   409,  -336,    83,   245,
-     346,  -336,  -336,  -336,    70,  -336,  -336,  -336,  -336,  -336,
-    -336,   340,   341,    59,   344,  1211,  1211,   249,  1211,   347,
-     348,  1149,   349,  -336,  -336,  -336,   351,   350,   352,   353,
-     354,   355,   356,   359,   366,   367,   376,   377,   378,   379,
-     381,   385,   389,   390,   391,   392,   393,   394,   395,   396,
-     397,   398,   399,   400,   403,   405,   408,   411,   418,    71,
-      85,    89,   143,   159,   162,   166,   169,  -336,  -336,   170,
-     173,  -336,  -336,   422,   407,  -336,  -336,   423,   177,   183,
-     186,  -336,   424,  -336,  -336,   466,  -336,   467,  -336,   468,
-    -336,   469,  -336,   470,  -336,   471,   187,  -336,  -336,  -336,
-    -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,
-    -336,   409,    83,  -336,  1149,  -336,   168,   251,  -336,  -336,
-    -336,   462,  -336,  -336,  -336,   473,  1149,  -336,  1149,  -336,
-    -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,
-    -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,
-    -336,  -336,  -336,  -336,  -336,  -336,  -336,  1149,  1149,  1149,
-    -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,
-    1149,  -336,  1149,  1149,  -336,  -336,  1149,  -336,  1149,  1149,
-    1149,  1149,  1149,  1149,  1149,  1149,  -336,   380,   409,  -336,
-    1211,   342,  -336,  1211,   474,    91,   477,   472,   503,   505,
-     506,   507,   191,   510,   513,   514,   515,   516,   517,   518,
-     519,   520,   523,  -336,   428,   475,   290,   476,  1149,   478,
-     564,   572,  -336,  -336,  -336,  -336,  -336,  -336,  -336,  -336,
-    -336,  -336,  -336,  -336,  -336,  -336,  -336,  1149,  -336,  -336,
-    -336,  -336,  -336,   566,  1211,   479,   567,   568,  -336,   480,
-    1211,   482,  -336,  -336,   483,  1211,  -336,   485,  -336
+      51,    59,    67,    64,    86,     4,    96,  -337,    99,    91,
+      64,    51,  -337,   126,  -337,   155,   197,   425,   175,  -337,
+    -337,  -337,    49,    97,  -337,    60,   112,  1165,  -337,  -337,
+     195,   201,   103,   204,   205,   206,   207,   208,   210,   211,
+     213,   214,   217,   218,   221,   228,   229,   230,   231,   232,
+     234,   235,   236,   237,   238,   239,   240,   241,   242,   243,
+     244,   248,   249,   250,   251,   252,   253,   254,   255,   256,
+     257,   259,   260,   262,   265,   275,   277,   278,   279,   282,
+     292,   293,   294,   302,   303,   304,   306,   308,   314,   315,
+     316,   318,   319,   320,   321,   322,   326,   327,   328,   329,
+    -337,   425,   425,   216,   324,  -337,    68,    75,   150,   189,
+    -337,  -337,   331,  -337,    91,  -337,   245,    -6,  1165,   525,
+    -337,  -337,  1165,  1165,  1165,  1165,  1165,  -337,  -337,   332,
+     330,  1165,  1165,   215,    50,   333,   335,  1165,  1165,  1165,
+    1165,  1165,  1165,  1165,  1165,  1165,  1165,  1165,  1165,  1165,
+    1165,  1165,  1165,  1165,  1165,  1165,  1165,  1165,  1165,  1165,
+    1165,  1165,  1165,  1165,  1165,  1165,  1165,  1165,  1165,  1165,
+    1165,  1165,  1165,  1165,  1165,  1165,  1165,  1165,   345,   346,
+    1165,  1165,   347,   355,  1165,  1165,   356,   357,  1165,  1165,
+    1165,  1165,   605,   358,   685,   765,   845,   925,  1005,  1085,
+    1165,  -337,  -337,   425,  -337,  1165,  1165,  1165,  1165,  1165,
+    1165,  1165,  1165,  1165,  1165,  1165,  1165,   425,  -337,    91,
+     266,   367,  -337,  -337,  -337,     0,  -337,  -337,  -337,  -337,
+    -337,  -337,   361,   363,   -25,   366,   215,   215,   271,   215,
+     368,   369,  1165,   370,  -337,  -337,  -337,   371,   372,   373,
+     374,   375,   376,   377,   378,   379,   380,   382,   384,   386,
+     392,   399,   400,   401,   409,   410,   412,   413,   419,   421,
+     422,   423,   426,   429,   430,   432,   436,   427,   439,   440,
+      69,    85,    89,    93,   142,   143,   160,   161,  -337,  -337,
+     164,   165,  -337,  -337,   482,   481,  -337,  -337,   484,   169,
+     170,   176,  -337,   485,  -337,  -337,   486,  -337,   487,  -337,
+     488,  -337,   489,  -337,   490,  -337,   491,   180,  -337,  -337,
+    -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,
+    -337,  -337,   425,    91,  -337,  1165,  -337,   323,   397,  -337,
+    -337,  -337,   364,  -337,  -337,  -337,   493,  1165,  -337,  1165,
+    -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,
+    -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,
+    -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,  1165,  1165,
+    1165,  -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,
+    -337,  1165,  -337,  1165,  1165,  -337,  -337,  1165,  -337,  1165,
+    1165,  1165,  1165,  1165,  1165,  1165,  1165,  -337,   428,   425,
+    -337,   215,   512,  -337,   215,   522,    53,   528,   523,   529,
+     530,   531,   532,   184,   533,   534,   535,   536,   537,   538,
+     580,   581,   582,   585,  -337,   492,   494,   269,   495,  1165,
+     497,   584,   592,  -337,  -337,  -337,  -337,  -337,  -337,  -337,
+    -337,  -337,  -337,  -337,  -337,  -337,  -337,  -337,  1165,  -337,
+    -337,  -337,  -337,  -337,   587,   215,   498,   593,   595,  -337,
+     502,   215,   499,  -337,  -337,   505,   215,  -337,   515,  -337
   };
 
   const unsigned char
@@ -2568,7 +2578,7 @@ namespace CalcPlusPlus {
   {
        3,     0,     0,     8,     0,     0,     0,     1,     0,    14,
        8,     3,     5,     0,     7,     0,     0,     0,     0,     9,
-       4,     6,     0,    16,    69,    70,     0,     0,    71,    72,
+       4,     6,     0,    16,    69,    71,     0,     0,    72,    73,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
@@ -2578,330 +2588,322 @@ namespace CalcPlusPlus {
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        2,     0,     0,     0,     0,    47,    50,    57,    60,    63,
       65,    66,     0,    67,    14,    11,     0,     0,     0,     0,
-      41,    42,     0,     0,     0,     0,     0,    68,    70,     0,
-       0,     0,    33,     0,     0,     0,     0,     0,     0,     0,
+      41,    42,     0,     0,     0,     0,     0,    68,    70,    71,
+       0,     0,     0,    33,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      21,    22,     0,    18,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    15,    14,     0,
-       0,    17,   152,    75,     0,    43,    44,    45,    46,    40,
-      64,     0,     0,     0,     0,    33,    33,     0,    33,     0,
-       0,     0,     0,    76,    77,    73,     0,     0,     0,     0,
+       0,    21,    22,     0,    18,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,    15,    14,
+       0,     0,    17,   153,    76,     0,    43,    44,    45,    46,
+      40,    64,     0,     0,     0,     0,    33,    33,     0,    33,
+       0,     0,     0,     0,    77,    78,    74,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,   117,   135,     0,
-       0,   138,   139,     0,     0,   119,   120,     0,     0,     0,
-       0,   147,     0,   151,   149,     0,   121,     0,   123,     0,
-     125,     0,   127,     0,   129,     0,     0,    19,    48,    49,
-      53,    54,    55,    56,    51,    52,    58,    59,    61,    62,
-      20,     0,    14,    10,     0,   153,     0,     0,    37,    35,
-      36,     0,    34,    38,    39,     0,     0,    78,     0,    80,
+       0,     0,     0,     0,     0,     0,     0,     0,   118,   136,
+       0,     0,   139,   140,     0,     0,   120,   121,     0,     0,
+       0,     0,   148,     0,   152,   150,     0,   122,     0,   124,
+       0,   126,     0,   128,     0,   130,     0,     0,    19,    48,
+      49,    53,    54,    55,    56,    51,    52,    58,    59,    61,
+      62,    20,     0,    14,    10,     0,   154,     0,     0,    37,
+      35,    36,     0,    34,    38,    39,     0,     0,    79,     0,
       81,    82,    83,    84,    85,    86,    87,    88,    89,    90,
       91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
-     101,   102,   103,   104,   105,   106,   107,     0,     0,     0,
-     111,   112,   113,   114,   115,   116,   133,   134,   136,   137,
-       0,   118,     0,     0,   142,   144,     0,   145,     0,     0,
-       0,     0,     0,     0,     0,     0,   131,     0,     0,    74,
-      33,    23,    27,    33,     0,     0,     0,     0,     0,     0,
+     101,   102,   103,   104,   105,   106,   107,   108,     0,     0,
+       0,   112,   113,   114,   115,   116,   117,   134,   135,   137,
+     138,     0,   119,     0,     0,   143,   145,     0,   146,     0,
+       0,     0,     0,     0,     0,     0,     0,   132,     0,     0,
+      75,    33,    23,    27,    33,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,    12,     0,     0,     0,     0,     0,     0,
-       0,     0,    79,   108,   109,   110,   140,   141,   143,   146,
-     148,   150,   122,   124,   126,   128,   130,     0,    13,    26,
-      25,    24,    28,     0,    33,     0,     0,     0,    29,     0,
-      33,     0,   132,    32,     0,    33,    31,     0,    30
+       0,     0,     0,     0,    12,     0,     0,     0,     0,     0,
+       0,     0,     0,    80,   109,   110,   111,   141,   142,   144,
+     147,   149,   151,   123,   125,   127,   129,   131,     0,    13,
+      26,    25,    24,    28,     0,    33,     0,     0,     0,    29,
+       0,    33,     0,   133,    32,     0,    33,    31,     0,    30
   };
 
   const short
   TParser::yypgoto_[] =
   {
-    -336,  -336,   573,  -336,   577,  -336,  -336,  -111,  -336,   -47,
-     -15,   -97,   -11,  -179,  -335,   -17,   -13,   -67,   -60,    -4,
-      -3,  -336,  -122,   -50,  -336,  -336,    -9,  -336
+    -337,  -337,   606,  -337,   611,  -337,  -337,  -111,  -337,   -89,
+     -15,   191,   -11,  -181,  -336,   -17,   -13,    -7,   -62,    -4,
+      -3,  -337,  -123,   -50,  -337,  -337,    -9,  -337
   };
 
   const short
   TParser::yydefgoto_[] =
   {
        0,     2,     3,     4,     9,   117,    10,    17,    18,   100,
-     235,   411,   236,   237,   238,   239,   245,   105,   106,   107,
-     108,   109,   246,   224,   110,   111,   240,   113
+     236,   412,   237,   238,   239,   240,   246,   105,   106,   107,
+     108,   109,   247,   225,   110,   111,   241,   113
   };
 
   const short
   TParser::yytable_[] =
   {
-     103,   412,   101,   217,   104,   219,   102,     1,   112,   206,
-     207,   208,   209,     7,   129,   247,   248,   249,   250,   251,
-     252,   253,   254,   255,   256,   257,   258,   259,   260,   261,
-     262,   263,   264,   265,   266,   267,   268,   269,   270,   271,
-     272,   273,   274,   275,   276,   277,   278,   233,     5,     6,
-     210,   211,   241,   115,   200,   201,   339,   340,    14,   342,
-     116,   293,   294,     8,    12,   297,   298,    13,   300,   302,
-      15,   305,   307,   309,   311,   313,   315,   316,   119,   334,
-     334,   335,   380,    11,   103,   103,   101,   101,   104,   104,
-     102,   102,   112,   112,   334,   233,   381,   220,   334,    16,
-     382,   412,   439,   204,   205,   221,   223,   331,    21,   225,
-     226,   227,   228,   229,   212,   213,   242,   231,   232,   279,
-     280,   281,   282,   283,   284,   285,   286,   214,   215,   289,
-     290,   120,   121,   122,   123,   124,   125,   318,   319,   299,
-     120,   121,   122,   123,   124,   125,   320,   321,   322,   323,
-     324,   325,   334,    23,   383,   317,   223,   223,   223,   223,
-     223,   223,   223,   223,    22,   126,   223,   223,   334,   330,
-     384,   334,   233,   385,   126,   334,   223,   386,   334,   334,
-     387,   388,   334,   114,   389,   103,   393,   101,   394,   104,
-     234,   102,   334,   112,   395,   396,   405,   397,   406,   103,
-     334,   101,   447,   104,   118,   102,   127,   112,   326,   327,
-     130,   328,   329,   230,   131,   132,   133,   134,   135,   136,
-     137,   408,   138,   139,   140,   141,   417,   142,   345,   143,
-     144,   435,   145,   146,   437,   147,   148,   149,   150,   151,
-     152,   153,   154,   155,   156,   157,    75,    76,   158,    78,
-      79,    80,    81,    82,    83,   418,   419,   420,    87,    88,
-      89,    90,    91,    92,    93,   159,   160,   161,   421,   162,
-     163,   423,   410,   164,   424,   165,   425,   426,   427,   428,
-     429,   430,   431,   432,   407,   469,   166,   167,   168,   169,
-     170,   474,   171,   172,   233,   173,   477,   174,   175,   176,
-     218,   177,   178,   179,   180,   181,   182,    30,   183,   184,
-     185,   186,   234,   187,   103,   188,   101,   189,   104,   190,
-     102,   409,   112,   191,   192,   193,   194,   195,   196,   197,
-     198,   199,   202,   416,   203,   467,   216,   243,   119,   461,
-     244,   287,   422,   288,   291,   292,   295,   296,   303,   332,
-     333,   336,   337,   338,   341,   413,   343,   344,   346,   348,
-     436,   434,   347,   349,   350,   351,   352,   353,    75,    76,
-     354,    78,    79,    80,    81,    82,    83,   355,   356,   223,
-      87,    88,    89,    90,    91,    92,    93,   357,   358,   359,
-     360,   103,   361,   101,   410,   104,   362,   102,   440,   112,
-     363,   364,   365,   366,   367,   368,   369,   370,   371,   372,
-     373,   374,    24,    25,   375,    26,   376,   377,   391,    27,
-     378,   460,    28,    29,   466,   463,    30,   379,    31,    32,
-      33,   390,   392,   398,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,   399,   400,   401,   402,   403,
-     404,   414,   415,   442,   438,   433,   441,    75,    76,    77,
-      78,    79,    80,    81,    82,    83,    84,    85,    86,    87,
-      88,    89,    90,    91,    92,    93,    94,    95,    96,    97,
-      98,    99,    24,   128,   443,    26,   444,   445,   446,    27,
-     222,   448,    28,    29,   449,   450,   451,   452,   453,   454,
-     455,   456,   457,   458,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,   465,   233,   468,   471,   472,
-     459,   462,   464,   470,    20,   473,   475,    19,   476,    77,
-     478,     0,    24,   128,     0,    26,    84,    85,    86,    27,
-     301,     0,    28,    29,     0,     0,    94,    95,    96,    97,
-      98,    99,     0,     0,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    77,
-       0,     0,    24,   128,     0,    26,    84,    85,    86,    27,
-     304,     0,    28,    29,     0,     0,    94,    95,    96,    97,
-      98,    99,     0,     0,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    77,
-       0,     0,    24,   128,     0,    26,    84,    85,    86,    27,
-     306,     0,    28,    29,     0,     0,    94,    95,    96,    97,
-      98,    99,     0,     0,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    77,
-       0,     0,    24,   128,     0,    26,    84,    85,    86,    27,
-     308,     0,    28,    29,     0,     0,    94,    95,    96,    97,
-      98,    99,     0,     0,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    77,
-       0,     0,    24,   128,     0,    26,    84,    85,    86,    27,
-     310,     0,    28,    29,     0,     0,    94,    95,    96,    97,
-      98,    99,     0,     0,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    77,
-       0,     0,    24,   128,     0,    26,    84,    85,    86,    27,
-     312,     0,    28,    29,     0,     0,    94,    95,    96,    97,
-      98,    99,     0,     0,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    77,
-       0,     0,    24,   128,     0,    26,    84,    85,    86,    27,
-     314,     0,    28,    29,     0,     0,    94,    95,    96,    97,
-      98,    99,     0,     0,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    77,
-       0,     0,    24,   128,     0,    26,    84,    85,    86,    27,
-       0,     0,    28,    29,     0,     0,    94,    95,    96,    97,
-      98,    99,     0,     0,    34,    35,    36,    37,    38,    39,
-      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
-      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,   233,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,    30,    77,
-      31,    32,    33,   234,     0,     0,    84,    85,    86,     0,
-       0,     0,     0,     0,     0,     0,    94,    95,    96,    97,
-      98,    99,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    75,
-      76,     0,    78,    79,    80,    81,    82,    83,     0,     0,
-       0,    87,    88,    89,    90,    91,    92,    93
+     103,   413,   101,   218,   104,   220,   102,    12,   112,   335,
+      13,   336,   201,   202,   130,   248,   249,   250,   251,   252,
+     253,   254,   255,   256,   257,   258,   259,   260,   261,   262,
+     263,   264,   265,   266,   267,   268,   269,   270,   271,   272,
+     273,   274,   275,   276,   277,   278,   279,   120,   121,   122,
+     123,   124,   125,   115,   234,   340,   341,   234,   343,   242,
+     116,   294,   295,     1,   440,   298,   299,     7,   301,   303,
+     119,   306,   308,   310,   312,   314,   316,   317,   335,     8,
+     381,   126,     5,     6,   103,   103,   101,   101,   104,   104,
+     102,   102,   112,   112,   335,    11,   382,   221,   335,    14,
+     383,   413,   335,    15,   384,   222,   224,    16,   332,   226,
+     227,   228,   229,   230,   318,   127,   128,   243,   232,   233,
+     280,   281,   282,   283,   284,   285,   286,   287,   331,    21,
+     290,   291,   120,   121,   122,   123,   124,   125,   205,   206,
+     300,   207,   208,   209,   210,   321,   322,   323,   324,   325,
+     326,   335,   335,   385,   386,   213,   214,   224,   224,   224,
+     224,   224,   224,   224,   224,    22,   126,   224,   224,   335,
+     335,   387,   388,   335,   335,   389,   390,   224,   394,   335,
+     395,   396,   211,   212,   114,   397,   103,   398,   101,   406,
+     104,   407,   102,   335,   112,   448,   215,   216,   319,   320,
+     103,    23,   101,   118,   104,   131,   102,   133,   112,   327,
+     328,   132,   329,   330,   134,   135,   136,   137,   138,   234,
+     139,   140,   409,   141,   142,   203,   418,   143,   144,   346,
+     436,   145,    30,   438,    31,    32,    33,   235,   146,   147,
+     148,   149,   150,   408,   151,   152,   153,   154,   155,   156,
+     157,   158,   159,   160,   161,   419,   420,   421,   162,   163,
+     164,   165,   166,   167,   168,   169,   170,   171,   422,   172,
+     173,   424,   174,   234,   425,   175,   426,   427,   428,   429,
+     430,   431,   432,   433,   470,   176,    30,   177,   178,   179,
+     475,   235,   180,    75,    76,   478,    78,    79,    80,    81,
+      82,    83,   181,   182,   183,    87,    88,    89,    90,    91,
+      92,    93,   184,   185,   186,   103,   187,   101,   188,   104,
+     435,   102,   410,   112,   189,   190,   191,   234,   192,   193,
+     194,   195,   196,   204,   417,   468,   197,   198,   199,   200,
+     217,   231,   119,   423,   244,   235,   245,    75,    76,   219,
+      78,    79,    80,    81,    82,    83,   288,   289,   292,    87,
+      88,    89,    90,    91,    92,    93,   293,   296,   297,   304,
+     333,   334,   337,   411,   338,   339,   342,   344,   345,   347,
+     224,   349,   348,   415,   350,   351,   352,   353,   354,   355,
+     356,   357,   103,   358,   101,   359,   104,   360,   102,   441,
+     112,    75,    76,   361,    78,    79,    80,    81,    82,    83,
+     362,   363,   364,    87,    88,    89,    90,    91,    92,    93,
+     365,   366,   461,   367,   368,   467,   464,   411,    24,    25,
+     369,    26,   370,   371,   372,    27,   378,   373,    28,    29,
+     374,   375,    30,   376,    31,    32,    33,   377,   379,   380,
+      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    45,    46,    47,    48,    49,    50,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
+      64,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,   391,   392,   393,   399,   400,   401,   402,   403,   404,
+     405,   414,   416,    75,    76,    77,    78,    79,    80,    81,
+      82,    83,    84,    85,    86,    87,    88,    89,    90,    91,
+      92,    93,    94,    95,    96,    97,    98,    99,    24,   129,
+     437,    26,   439,   434,   443,    27,   223,   442,    28,    29,
+     444,   445,   446,   447,   449,   450,   451,   452,   453,   454,
+      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    45,    46,    47,    48,    49,    50,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
+      64,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,   455,   456,   457,   458,   466,   234,   459,   469,   460,
+     463,   465,   471,   476,   472,    77,   473,   474,    24,   129,
+     477,    26,    84,    85,    86,    27,   302,    20,    28,    29,
+     479,    19,    94,    95,    96,    97,    98,    99,   462,     0,
+      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    45,    46,    47,    48,    49,    50,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
+      64,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    77,     0,     0,    24,   129,
+       0,    26,    84,    85,    86,    27,   305,     0,    28,    29,
+       0,     0,    94,    95,    96,    97,    98,    99,     0,     0,
+      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    45,    46,    47,    48,    49,    50,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
+      64,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    77,     0,     0,    24,   129,
+       0,    26,    84,    85,    86,    27,   307,     0,    28,    29,
+       0,     0,    94,    95,    96,    97,    98,    99,     0,     0,
+      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    45,    46,    47,    48,    49,    50,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
+      64,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    77,     0,     0,    24,   129,
+       0,    26,    84,    85,    86,    27,   309,     0,    28,    29,
+       0,     0,    94,    95,    96,    97,    98,    99,     0,     0,
+      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    45,    46,    47,    48,    49,    50,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
+      64,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    77,     0,     0,    24,   129,
+       0,    26,    84,    85,    86,    27,   311,     0,    28,    29,
+       0,     0,    94,    95,    96,    97,    98,    99,     0,     0,
+      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    45,    46,    47,    48,    49,    50,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
+      64,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    77,     0,     0,    24,   129,
+       0,    26,    84,    85,    86,    27,   313,     0,    28,    29,
+       0,     0,    94,    95,    96,    97,    98,    99,     0,     0,
+      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    45,    46,    47,    48,    49,    50,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
+      64,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    77,     0,     0,    24,   129,
+       0,    26,    84,    85,    86,    27,   315,     0,    28,    29,
+       0,     0,    94,    95,    96,    97,    98,    99,     0,     0,
+      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    45,    46,    47,    48,    49,    50,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
+      64,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    77,     0,     0,    24,   129,
+       0,    26,    84,    85,    86,    27,     0,     0,    28,    29,
+       0,     0,    94,    95,    96,    97,    98,    99,     0,     0,
+      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    45,    46,    47,    48,    49,    50,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
+      64,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    77,     0,     0,     0,     0,
+       0,     0,    84,    85,    86,     0,     0,     0,     0,     0,
+       0,     0,    94,    95,    96,    97,    98,    99
   };
 
   const short
   TParser::yycheck_[] =
   {
-      17,   336,    17,   114,    17,    11,    17,    12,    17,    66,
-      67,    68,    69,     0,    27,   137,   138,   139,   140,   141,
-     142,   143,   144,   145,   146,   147,   148,   149,   150,   151,
-     152,   153,   154,   155,   156,   157,   158,   159,   160,   161,
-     162,   163,   164,   165,   166,   167,   168,     4,    23,    24,
-     107,   108,     9,     4,   101,   102,   235,   236,     3,   238,
-      11,   183,   184,    15,     3,   187,   188,     6,   190,   191,
-       4,   193,   194,   195,   196,   197,   198,   199,    10,     9,
-       9,    11,    11,     9,   101,   102,   101,   102,   101,   102,
-     101,   102,   101,   102,     9,     4,    11,   103,     9,    16,
-      11,   436,    11,    70,    71,   118,   119,   218,     3,   122,
-     123,   124,   125,   126,     5,     6,   133,   130,   131,   169,
-     170,   171,   172,   173,   174,   175,   176,     7,     8,   179,
-     180,    72,    73,    74,    75,    76,    77,   204,   205,   189,
-      72,    73,    74,    75,    76,    77,   206,   207,   208,   209,
-     210,   211,     9,     4,    11,   202,   169,   170,   171,   172,
-     173,   174,   175,   176,    10,   106,   179,   180,     9,   216,
-      11,     9,     4,    11,   106,     9,   189,    11,     9,     9,
-      11,    11,     9,     9,    11,   202,     9,   202,    11,   202,
-      22,   202,     9,   202,    11,     9,     9,    11,    11,   216,
-       9,   216,    11,   216,   106,   216,     3,   216,   212,   213,
-      10,   214,   215,    11,    10,   104,    10,    10,    10,    10,
-      10,   332,    10,    10,    10,    10,   348,    10,   241,    10,
-      10,   410,    10,    10,   413,    10,    10,    10,    10,    10,
-      10,    10,    10,    10,    10,    10,    78,    79,    10,    81,
-      82,    83,    84,    85,    86,   377,   378,   379,    90,    91,
-      92,    93,    94,    95,    96,    10,    10,    10,   390,    10,
-      10,   393,   104,    10,   396,    10,   398,   399,   400,   401,
-     402,   403,   404,   405,   331,   464,    10,    10,    10,    10,
-      10,   470,    10,    10,     4,    10,   475,    10,    10,    10,
-     104,    10,    10,    10,    10,    10,    10,    17,    10,    10,
-      10,    10,    22,    10,   331,    10,   331,    10,   331,    10,
-     331,   334,   331,    10,    10,    10,    10,    10,    10,    10,
-      10,    10,     9,   346,     9,   457,     9,    11,    10,   436,
-      11,    11,   392,    11,    11,    11,    11,    11,    11,   104,
-       4,    11,    11,     9,   105,   104,     9,     9,     9,     9,
-      18,   408,    11,    11,    11,    11,    11,    11,    78,    79,
-      11,    81,    82,    83,    84,    85,    86,    11,    11,   392,
-      90,    91,    92,    93,    94,    95,    96,    11,    11,    11,
-      11,   408,    11,   408,   104,   408,    11,   408,   415,   408,
+      17,   337,    17,   114,    17,    11,    17,     3,    17,     9,
+       6,    11,   101,   102,    27,   138,   139,   140,   141,   142,
+     143,   144,   145,   146,   147,   148,   149,   150,   151,   152,
+     153,   154,   155,   156,   157,   158,   159,   160,   161,   162,
+     163,   164,   165,   166,   167,   168,   169,    72,    73,    74,
+      75,    76,    77,     4,     4,   236,   237,     4,   239,     9,
+      11,   184,   185,    12,    11,   188,   189,     0,   191,   192,
+      10,   194,   195,   196,   197,   198,   199,   200,     9,    15,
+      11,   106,    23,    24,   101,   102,   101,   102,   101,   102,
+     101,   102,   101,   102,     9,     9,    11,   103,     9,     3,
+      11,   437,     9,     4,    11,   118,   119,    16,   219,   122,
+     123,   124,   125,   126,   203,     3,     4,   134,   131,   132,
+     170,   171,   172,   173,   174,   175,   176,   177,   217,     3,
+     180,   181,    72,    73,    74,    75,    76,    77,    70,    71,
+     190,    66,    67,    68,    69,   207,   208,   209,   210,   211,
+     212,     9,     9,    11,    11,     5,     6,   170,   171,   172,
+     173,   174,   175,   176,   177,    10,   106,   180,   181,     9,
+       9,    11,    11,     9,     9,    11,    11,   190,     9,     9,
+      11,    11,   107,   108,     9,     9,   203,    11,   203,     9,
+     203,    11,   203,     9,   203,    11,     7,     8,   205,   206,
+     217,     4,   217,   106,   217,    10,   217,   104,   217,   213,
+     214,    10,   215,   216,    10,    10,    10,    10,    10,     4,
+      10,    10,   333,    10,    10,     9,   349,    10,    10,   242,
+     411,    10,    17,   414,    19,    20,    21,    22,    10,    10,
+      10,    10,    10,   332,    10,    10,    10,    10,    10,    10,
+      10,    10,    10,    10,    10,   378,   379,   380,    10,    10,
+      10,    10,    10,    10,    10,    10,    10,    10,   391,    10,
+      10,   394,    10,     4,   397,    10,   399,   400,   401,   402,
+     403,   404,   405,   406,   465,    10,    17,    10,    10,    10,
+     471,    22,    10,    78,    79,   476,    81,    82,    83,    84,
+      85,    86,    10,    10,    10,    90,    91,    92,    93,    94,
+      95,    96,    10,    10,    10,   332,    10,   332,    10,   332,
+     409,   332,   335,   332,    10,    10,    10,     4,    10,    10,
+      10,    10,    10,     9,   347,   458,    10,    10,    10,    10,
+       9,    11,    10,   393,    11,    22,    11,    78,    79,   104,
+      81,    82,    83,    84,    85,    86,    11,    11,    11,    90,
+      91,    92,    93,    94,    95,    96,    11,    11,    11,    11,
+     104,     4,    11,   104,    11,     9,   105,     9,     9,     9,
+     393,     9,    11,    19,    11,    11,    11,    11,    11,    11,
+      11,    11,   409,    11,   409,    11,   409,    11,   409,   416,
+     409,    78,    79,    11,    81,    82,    83,    84,    85,    86,
+      11,    11,    11,    90,    91,    92,    93,    94,    95,    96,
+      11,    11,   437,    11,    11,   442,   439,   104,     3,     4,
+      11,     6,    11,    11,    11,    10,     9,    11,    13,    14,
+      11,    11,    17,    11,    19,    20,    21,    11,     9,     9,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,     9,    11,     9,     9,     9,     9,     9,     9,     9,
+       9,   104,     9,    78,    79,    80,    81,    82,    83,    84,
+      85,    86,    87,    88,    89,    90,    91,    92,    93,    94,
+      95,    96,    97,    98,    99,   100,   101,   102,     3,     4,
+      18,     6,    10,   105,    11,    10,    11,     9,    13,    14,
       11,    11,    11,    11,    11,    11,    11,    11,    11,    11,
-      11,    11,     3,     4,    11,     6,    11,     9,    11,    10,
-       9,   436,    13,    14,   441,   438,    17,     9,    19,    20,
-      21,     9,     9,     9,    25,    26,    27,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,     9,     9,     9,     9,     9,
-       9,    19,     9,    11,    10,   105,     9,    78,    79,    80,
-      81,    82,    83,    84,    85,    86,    87,    88,    89,    90,
-      91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
-     101,   102,     3,     4,    11,     6,    11,    11,    11,    10,
-      11,    11,    13,    14,    11,    11,    11,    11,    11,    11,
-      11,    11,     9,   105,    25,    26,    27,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,    11,     4,    11,    11,    11,
-     105,   105,   104,   104,    11,   105,   104,    10,   105,    80,
-     105,    -1,     3,     4,    -1,     6,    87,    88,    89,    10,
-      11,    -1,    13,    14,    -1,    -1,    97,    98,    99,   100,
-     101,   102,    -1,    -1,    25,    26,    27,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    80,
-      -1,    -1,     3,     4,    -1,     6,    87,    88,    89,    10,
-      11,    -1,    13,    14,    -1,    -1,    97,    98,    99,   100,
-     101,   102,    -1,    -1,    25,    26,    27,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    80,
-      -1,    -1,     3,     4,    -1,     6,    87,    88,    89,    10,
-      11,    -1,    13,    14,    -1,    -1,    97,    98,    99,   100,
-     101,   102,    -1,    -1,    25,    26,    27,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    80,
-      -1,    -1,     3,     4,    -1,     6,    87,    88,    89,    10,
-      11,    -1,    13,    14,    -1,    -1,    97,    98,    99,   100,
-     101,   102,    -1,    -1,    25,    26,    27,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    80,
-      -1,    -1,     3,     4,    -1,     6,    87,    88,    89,    10,
-      11,    -1,    13,    14,    -1,    -1,    97,    98,    99,   100,
-     101,   102,    -1,    -1,    25,    26,    27,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    80,
-      -1,    -1,     3,     4,    -1,     6,    87,    88,    89,    10,
-      11,    -1,    13,    14,    -1,    -1,    97,    98,    99,   100,
-     101,   102,    -1,    -1,    25,    26,    27,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    80,
-      -1,    -1,     3,     4,    -1,     6,    87,    88,    89,    10,
-      11,    -1,    13,    14,    -1,    -1,    97,    98,    99,   100,
-     101,   102,    -1,    -1,    25,    26,    27,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    80,
-      -1,    -1,     3,     4,    -1,     6,    87,    88,    89,    10,
-      -1,    -1,    13,    14,    -1,    -1,    97,    98,    99,   100,
-     101,   102,    -1,    -1,    25,    26,    27,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,     4,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    17,    80,
-      19,    20,    21,    22,    -1,    -1,    87,    88,    89,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    97,    98,    99,   100,
-     101,   102,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    78,
-      79,    -1,    81,    82,    83,    84,    85,    86,    -1,    -1,
-      -1,    90,    91,    92,    93,    94,    95,    96
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,    11,    11,    11,     9,    11,     4,   105,    11,   105,
+     105,   104,   104,   104,    11,    80,    11,   105,     3,     4,
+     105,     6,    87,    88,    89,    10,    11,    11,    13,    14,
+     105,    10,    97,    98,    99,   100,   101,   102,   437,    -1,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    80,    -1,    -1,     3,     4,
+      -1,     6,    87,    88,    89,    10,    11,    -1,    13,    14,
+      -1,    -1,    97,    98,    99,   100,   101,   102,    -1,    -1,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    80,    -1,    -1,     3,     4,
+      -1,     6,    87,    88,    89,    10,    11,    -1,    13,    14,
+      -1,    -1,    97,    98,    99,   100,   101,   102,    -1,    -1,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    80,    -1,    -1,     3,     4,
+      -1,     6,    87,    88,    89,    10,    11,    -1,    13,    14,
+      -1,    -1,    97,    98,    99,   100,   101,   102,    -1,    -1,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    80,    -1,    -1,     3,     4,
+      -1,     6,    87,    88,    89,    10,    11,    -1,    13,    14,
+      -1,    -1,    97,    98,    99,   100,   101,   102,    -1,    -1,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    80,    -1,    -1,     3,     4,
+      -1,     6,    87,    88,    89,    10,    11,    -1,    13,    14,
+      -1,    -1,    97,    98,    99,   100,   101,   102,    -1,    -1,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    80,    -1,    -1,     3,     4,
+      -1,     6,    87,    88,    89,    10,    11,    -1,    13,    14,
+      -1,    -1,    97,    98,    99,   100,   101,   102,    -1,    -1,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    80,    -1,    -1,     3,     4,
+      -1,     6,    87,    88,    89,    10,    -1,    -1,    13,    14,
+      -1,    -1,    97,    98,    99,   100,   101,   102,    -1,    -1,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+      65,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    80,    -1,    -1,    -1,    -1,
+      -1,    -1,    87,    88,    89,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    97,    98,    99,   100,   101,   102
   };
 
   const unsigned char
@@ -2919,42 +2921,42 @@ namespace CalcPlusPlus {
       93,    94,    95,    96,    97,    98,    99,   100,   101,   102,
      118,   119,   121,   124,   125,   126,   127,   128,   129,   130,
      133,   134,   135,   136,     9,     4,    11,   114,   106,    10,
-      72,    73,    74,    75,    76,    77,   106,     3,     4,   125,
-      10,    10,   104,    10,    10,    10,    10,    10,    10,    10,
+      72,    73,    74,    75,    76,    77,   106,     3,     4,     4,
+     125,    10,    10,   104,    10,    10,    10,    10,    10,    10,
       10,    10,    10,    10,    10,    10,    10,    10,    10,    10,
       10,    10,    10,    10,    10,    10,    10,    10,    10,    10,
       10,    10,    10,    10,    10,    10,    10,    10,    10,    10,
       10,    10,    10,    10,    10,    10,    10,    10,    10,    10,
       10,    10,    10,    10,    10,    10,    10,    10,    10,    10,
       10,    10,    10,    10,    10,    10,    10,    10,    10,    10,
-     118,   118,     9,     9,    70,    71,    66,    67,    68,    69,
-     107,   108,     5,     6,     7,     8,     9,   116,   104,    11,
-     103,   125,    11,   125,   132,   125,   125,   125,   125,   125,
-      11,   125,   125,     4,    22,   119,   121,   122,   123,   124,
-     135,     9,   124,    11,    11,   125,   131,   131,   131,   131,
+      10,   118,   118,     9,     9,    70,    71,    66,    67,    68,
+      69,   107,   108,     5,     6,     7,     8,     9,   116,   104,
+      11,   103,   125,    11,   125,   132,   125,   125,   125,   125,
+     125,    11,   125,   125,     4,    22,   119,   121,   122,   123,
+     124,   135,     9,   124,    11,    11,   125,   131,   131,   131,
      131,   131,   131,   131,   131,   131,   131,   131,   131,   131,
      131,   131,   131,   131,   131,   131,   131,   131,   131,   131,
-     131,   131,   131,   131,   131,   131,   131,   131,   131,   132,
-     132,   132,   132,   132,   132,   132,   132,    11,    11,   132,
-     132,    11,    11,   131,   131,    11,    11,   131,   131,   132,
-     131,    11,   131,    11,    11,   131,    11,   131,    11,   131,
-      11,   131,    11,   131,    11,   131,   131,   118,   126,   126,
-     127,   127,   127,   127,   127,   127,   128,   128,   129,   129,
-     118,   116,   104,     4,     9,    11,    11,    11,     9,   122,
-     122,   105,   122,     9,     9,   125,     9,    11,     9,    11,
+     131,   131,   131,   131,   131,   131,   131,   131,   131,   131,
+     132,   132,   132,   132,   132,   132,   132,   132,    11,    11,
+     132,   132,    11,    11,   131,   131,    11,    11,   131,   131,
+     132,   131,    11,   131,    11,    11,   131,    11,   131,    11,
+     131,    11,   131,    11,   131,    11,   131,   131,   118,   126,
+     126,   127,   127,   127,   127,   127,   127,   128,   128,   129,
+     129,   118,   116,   104,     4,     9,    11,    11,    11,     9,
+     122,   122,   105,   122,     9,     9,   125,     9,    11,     9,
       11,    11,    11,    11,    11,    11,    11,    11,    11,    11,
       11,    11,    11,    11,    11,    11,    11,    11,    11,    11,
-      11,    11,    11,    11,    11,    11,    11,     9,     9,     9,
-      11,    11,    11,    11,    11,    11,    11,    11,    11,    11,
-       9,    11,     9,     9,    11,    11,     9,    11,     9,     9,
-       9,     9,     9,     9,     9,     9,    11,   118,   116,   125,
-     104,   120,   123,   104,    19,     9,   125,   131,   131,   131,
-     131,   131,   132,   131,   131,   131,   131,   131,   131,   131,
-     131,   131,   131,   105,   118,   122,    18,   122,    10,    11,
-     124,     9,    11,    11,    11,    11,    11,    11,    11,    11,
-      11,    11,    11,    11,    11,    11,    11,     9,   105,   105,
-     119,   120,   105,   125,   104,    11,   124,   131,    11,   122,
-     104,    11,    11,   105,   122,   104,   105,   122,   105
+      11,    11,    11,    11,    11,    11,    11,    11,     9,     9,
+       9,    11,    11,    11,    11,    11,    11,    11,    11,    11,
+      11,     9,    11,     9,     9,    11,    11,     9,    11,     9,
+       9,     9,     9,     9,     9,     9,     9,    11,   118,   116,
+     125,   104,   120,   123,   104,    19,     9,   125,   131,   131,
+     131,   131,   131,   132,   131,   131,   131,   131,   131,   131,
+     131,   131,   131,   131,   105,   118,   122,    18,   122,    10,
+      11,   124,     9,    11,    11,    11,    11,    11,    11,    11,
+      11,    11,    11,    11,    11,    11,    11,    11,     9,   105,
+     105,   119,   120,   105,   125,   104,    11,   124,   131,    11,
+     122,   104,    11,    11,   105,   122,   104,   105,   122,   105
   };
 
   const unsigned char
@@ -2967,15 +2969,15 @@ namespace CalcPlusPlus {
      124,   124,   124,   124,   124,   124,   124,   125,   126,   126,
      126,   127,   127,   127,   127,   127,   127,   127,   128,   128,
      128,   129,   129,   129,   130,   130,   130,   130,   130,   130,
-     130,   130,   130,   131,   132,   132,   133,   133,   133,   133,
+     130,   130,   130,   130,   131,   132,   132,   133,   133,   133,
      133,   133,   133,   133,   133,   133,   133,   133,   133,   133,
      133,   133,   133,   133,   133,   133,   133,   133,   133,   133,
      133,   133,   133,   133,   133,   133,   133,   133,   133,   133,
-     133,   133,   133,   133,   133,   133,   133,   134,   134,   134,
+     133,   133,   133,   133,   133,   133,   133,   133,   134,   134,
      134,   134,   134,   134,   134,   134,   134,   134,   134,   134,
-     134,   134,   134,   135,   135,   135,   135,   135,   135,   135,
+     134,   134,   134,   134,   135,   135,   135,   135,   135,   135,
      135,   135,   135,   135,   135,   135,   135,   135,   135,   135,
-     135,   135,   136,   136
+     135,   135,   135,   136,   136
   };
 
   const signed char
@@ -2988,15 +2990,15 @@ namespace CalcPlusPlus {
        3,     2,     2,     3,     3,     3,     3,     1,     3,     3,
        1,     3,     3,     3,     3,     3,     3,     1,     3,     3,
        1,     3,     3,     1,     3,     1,     1,     1,     2,     1,
-       1,     1,     1,     1,     3,     1,     3,     3,     4,     6,
+       2,     1,     1,     1,     1,     3,     1,     3,     3,     4,
+       6,     4,     4,     4,     4,     4,     4,     4,     4,     4,
        4,     4,     4,     4,     4,     4,     4,     4,     4,     4,
-       4,     4,     4,     4,     4,     4,     4,     4,     4,     4,
-       4,     4,     4,     4,     4,     4,     4,     4,     6,     6,
-       6,     4,     4,     4,     4,     4,     4,     3,     4,     3,
-       3,     3,     6,     3,     6,     3,     6,     3,     6,     3,
-       6,     4,     8,     4,     4,     3,     4,     4,     3,     3,
-       6,     6,     4,     6,     4,     4,     6,     3,     6,     3,
-       6,     3,     3,     4
+       4,     4,     4,     4,     4,     4,     4,     4,     4,     6,
+       6,     6,     4,     4,     4,     4,     4,     4,     3,     4,
+       3,     3,     3,     6,     3,     6,     3,     6,     3,     6,
+       3,     6,     4,     8,     4,     4,     3,     4,     4,     3,
+       3,     6,     6,     4,     6,     4,     4,     6,     3,     6,
+       3,     6,     3,     3,     4
   };
 
 
@@ -3052,15 +3054,15 @@ namespace CalcPlusPlus {
      531,   536,   540,   544,   549,   554,   559,   569,   575,   580,
      585,   591,   596,   601,   606,   611,   616,   621,   627,   632,
      637,   643,   648,   653,   659,   660,   661,   662,   663,   664,
-     665,   666,   667,   673,   679,   690,   699,   700,   701,   705,
-     710,   714,   718,   722,   726,   730,   734,   738,   742,   746,
-     750,   754,   758,   762,   766,   770,   774,   778,   782,   786,
-     790,   794,   798,   802,   806,   810,   814,   818,   822,   827,
-     832,   837,   841,   845,   849,   853,   857,   866,   867,   871,
-     872,   873,   874,   879,   880,   885,   886,   891,   892,   897,
-     898,   903,   907,   918,   922,   926,   927,   931,   935,   936,
-     937,   942,   947,   951,   956,   960,   964,   969,   970,   975,
-     976,   981,   987,   988
+     665,   670,   671,   672,   678,   684,   695,   704,   705,   706,
+     710,   715,   719,   723,   727,   731,   735,   739,   743,   747,
+     751,   755,   759,   763,   767,   771,   775,   779,   783,   787,
+     791,   795,   799,   803,   807,   811,   815,   819,   823,   827,
+     832,   837,   842,   846,   850,   854,   858,   862,   871,   872,
+     876,   877,   878,   879,   884,   885,   890,   891,   896,   897,
+     902,   903,   908,   912,   923,   927,   931,   932,   936,   940,
+     941,   942,   947,   952,   956,   961,   965,   969,   974,   975,
+     980,   981,   986,   992,   993
   };
 
   void
@@ -3093,9 +3095,9 @@ namespace CalcPlusPlus {
 
 #line 6 "./_parser_bison.y"
 } // CalcPlusPlus
-#line 3097 "parser.cpp"
+#line 3099 "parser.cpp"
 
-#line 993 "./_parser_bison.y"
+#line 998 "./_parser_bison.y"
 
 
 
