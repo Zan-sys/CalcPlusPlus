@@ -28,6 +28,7 @@ private:
     std::deque<double> var_stack;                                           // Стек для хранения переменных
 
     bool IsValid(double value);     // Проверка правильности расчётов
+    bool IsErrorHandleInStack();    // Проверка наличия обработчиков ошибок в стеке
 
     double cotan(double value);     // Котангенс (аргумент вводится в радианах)
     double sec(double value);       // Секанс (аргумент вводится в радианах)

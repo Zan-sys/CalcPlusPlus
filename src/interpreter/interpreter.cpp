@@ -70,6 +70,19 @@ bool TInterpreter::IsValid(double value)
 }
 // ---------------------------------------------------------------------------
 //
+// Проверка наличия обработчиков ошибок в стеке
+//
+bool TInterpreter::IsErrorHandleInStack()
+{
+    auto it = find_if(rbegin(node_stack), rend(node_stack), [](auto& value) -> bool
+    {
+        return value.second->Is(TActionType::IsErrorValue) || value.second->Is(TActionType::IfErrValueDef);
+    });
+
+    return it != rend(node_stack);
+}
+// ---------------------------------------------------------------------------
+//
 // Котангенс (аргумент вводится в радианах)
 //
 double TInterpreter::cotan(double value)
@@ -349,10 +362,22 @@ bool TInterpreter::Run(double& result)
         while (!node_stack.empty())
         {
             //
-            // Выход из цикла обработки, если обнаружена ошибка
+            // Обнаружена ошибка
             //
-            if (!IsValid(result))
-                break;
+            if (!IsValid(result) )
+            {
+                //
+                // В стеке есть функции обработки ошибок, продолжаем выполнение кода
+                //
+                if (IsErrorHandleInStack())
+                {
+                    result = 0.0;
+                }
+                else // Функции обработки ошибок в стеке нет, выход из цикла обработки
+                {
+                    break;
+                }
+            }
             //
             // Чтение узла из стека
             //

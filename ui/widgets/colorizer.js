@@ -166,7 +166,7 @@ export function colorize() {
     const LITERALS = { "true": true, "false": true, "break": true };
 
     const BUILD_IN_FUNC = { "pi": true, "errorvalue": true, "iserrorvalue": true,
-                            "iferrvaluedef": true, "ln": true, "lg": true, "sin": true,
+                            "iferrorvaluedef": true, "ln": true, "lg": true, "sin": true,
                             "cos": true, "tan": true, "cotan": true, "sec": true, "csc": true,
                             "asin": true, "acos": true, "atan": true, "acotan": true,
                             "asec": true, "acsc": true, "sinh": true, "cosh": true, "tanh": true,
