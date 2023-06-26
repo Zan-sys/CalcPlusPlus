@@ -436,7 +436,7 @@ loop_expression : WHILE '(' math_expression ')' '{' block_expression '}'        
                                                                                                                                 $$->AddNode($3);
                                                                                                                                 $$->AddNode($6);
                                                                                                                             }
-                | DO_WHILE '{' block_expression '}' WHILE '(' math_expression ')'                                           {
+                | DO_WHILE '{' block_expression '}' WHILE '(' math_expression ')' ';'                                       {
                                                                                                                                 $$ = std::make_shared<TActionNode>(TActionType::DoWhile);
                                                                                                                                 $$->AddNode($3);
                                                                                                                                 $$->AddNode($7);
