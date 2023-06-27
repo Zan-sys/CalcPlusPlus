@@ -61,25 +61,59 @@ template <typename Type> typename Type::value_type& PENULT(Type& Container)
 TInterpreter::TInterpreter() : err_value(INTERPRETER_ERROR_VALUE), loop_limit(INTERPRETER_LOOP_LIMIT), root(nullptr) {}
 // ---------------------------------------------------------------------------
 //
+// Поиск узла с ошибкой в обработчике ошибок
+//
+bool TInterpreter::FindErrorNodeInErrorHandle(std::shared_ptr<TActionNode> handle, std::shared_ptr<TActionNode> error_node)
+{
+    if (handle == error_node)
+    {
+        return true;
+    }
+
+    for (auto _node : handle->Nodes)
+    {
+        if (FindErrorNodeInErrorHandle(_node, error_node))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+// ---------------------------------------------------------------------------
+//
+// Проверка наличия обработчиков ошибок в стеке
+//
+bool TInterpreter::IsErrorHandleInStack(std::shared_ptr<TActionNode> error_node)
+{
+    if (error_node)
+    {
+        //
+        // Поиск узла обработки ошибок
+        //
+        auto it = find_if(rbegin(node_stack), rend(node_stack), [](auto& value) -> bool
+        {
+            return value.second->Is(TActionType::IsErrorValue) || value.second->Is(TActionType::IfErrValueDef);
+        });
+        //
+        // Проверка наличия узла сгенерировавшего ошибку в дочерних узлах обработчика ошибок
+        //
+        if (it != rend(node_stack))
+        {
+            return FindErrorNodeInErrorHandle(it->second, error_node);
+        }
+    }
+
+    return false;
+}
+// ---------------------------------------------------------------------------
+//
 // Проверка правильности расчётов
 //
 bool TInterpreter::IsValid(double value)
 {
     bool result(isnan(value) || isinf(value));
     return !result;
-}
-// ---------------------------------------------------------------------------
-//
-// Проверка наличия обработчиков ошибок в стеке
-//
-bool TInterpreter::IsErrorHandleInStack()
-{
-    auto it = find_if(rbegin(node_stack), rend(node_stack), [](auto& value) -> bool
-    {
-        return value.second->Is(TActionType::IsErrorValue) || value.second->Is(TActionType::IfErrValueDef);
-    });
-
-    return it != rend(node_stack);
 }
 // ---------------------------------------------------------------------------
 //
@@ -353,6 +387,14 @@ bool TInterpreter::Run(double& result)
     {
         result = 0.0;
         //
+        // Флаг выгрузки узла из стека
+        //
+        bool popup(false);
+        //
+        // Текущий или предыдущий узел в стеке
+        //
+        shared_ptr<TActionNode> node(nullptr);
+        //
         // Загружаем корневой узел дерева разбора
         //
         node_stack.push_back(pair(false, root));
@@ -369,7 +411,7 @@ bool TInterpreter::Run(double& result)
                 //
                 // В стеке есть функции обработки ошибок, продолжаем выполнение кода
                 //
-                if (IsErrorHandleInStack())
+                if (IsErrorHandleInStack(node))
                 {
                     result = 0.0;
                 }
@@ -380,8 +422,13 @@ bool TInterpreter::Run(double& result)
             }
             //
             // Чтение узла из стека
+            // Флаг выгрузки узла из стека
             //
-            auto [popup, node] = node_stack.back();
+            popup = node_stack.back().first;
+            //
+            // Текущий узел в стеке (уже не предыдущий)
+            //
+            node = node_stack.back().second;
             //
             // Количество дочерних элементов узла
             //

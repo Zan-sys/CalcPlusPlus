@@ -27,8 +27,10 @@ private:
     std::vector<double> result_stack;                                       // Стек для хранения результатов
     std::deque<double> var_stack;                                           // Стек для хранения переменных
 
+    bool FindErrorNodeInErrorHandle(std::shared_ptr<TActionNode> handle, std::shared_ptr<TActionNode> error_node);  // Поиск узла с ошибкой в обработчике ошибок
+    bool IsErrorHandleInStack(std::shared_ptr<TActionNode> error_node);                                             // Проверка наличия обработчиков ошибок в стеке
+
     bool IsValid(double value);     // Проверка правильности расчётов
-    bool IsErrorHandleInStack();    // Проверка наличия обработчиков ошибок в стеке
 
     double cotan(double value);     // Котангенс (аргумент вводится в радианах)
     double sec(double value);       // Секанс (аргумент вводится в радианах)
