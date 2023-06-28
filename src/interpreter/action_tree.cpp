@@ -271,8 +271,8 @@ static vector<string> vector_action_strings = {
     "ArrayPoly",
 
     "Functions",
-    "Function",
-    "InvokeFunction"
+    "InvokeFunction",
+    "Function"
 };
 // ---------------------------------------------------------------------------
 #pragma region Functions // Набор вспомогательных функций
