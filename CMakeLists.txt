@@ -61,7 +61,7 @@ set(SHELL_FILE_NAME)
 
 if(WIN32) # Для Windows
     add_definitions(-DUNICODE -D_UNICODE -D_CRT_SECURE_NO_WARNINGS -D_WIN32_WINNT=0x0601)
-    # Статическое подключение C++ Runtime библиотек только для Release (/MD - диномическое подключение, /MT - статическое подключение)
+    # Статическое подключение C++ Runtime библиотек только для Release (/MD - динамическое подключение, /MT - статическое подключение)
     if (CMAKE_BUILD_TYPE STREQUAL "Release")
         message(STATUS "DEFAULT CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
         # Поиск флага /MD в настройках компилятора
@@ -101,7 +101,7 @@ endif()
 set(EXECUTABLE_OUTPUT_PATH ${EXE_OUTPUT_DIRECTORY})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${EXE_OUTPUT_DIRECTORY})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${EXE_OUTPUT_DIRECTORY})
-# Путь к каталогу для дианмически подключаемых библиотек
+# Путь к каталогу для динамически подключаемых библиотек
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${EXE_OUTPUT_DIRECTORY})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${EXE_OUTPUT_DIRECTORY})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${EXE_OUTPUT_DIRECTORY})
@@ -218,10 +218,10 @@ add_custom_command(TARGET SHELL_CMD
 # Каталоги с include файлами
 include_directories(${INCLUDES})
 
-# Создание исполняесого файла
+# Создание исполняемого файла
 add_executable(CALC++ ${EXE_OPTIONS} ${CPP_MAIN} ${CPP} ${HPP} ${RC})
 
 add_dependencies(CALC++ SHELL_CMD)
 
-# Линковка необходимых библиотек
+# Подключение необходимых библиотек
 target_link_libraries(CALC++ ${LIB})
