@@ -204,7 +204,7 @@ set(CPP_MAIN ${CPP_MAIN} ${SCITER_SDK_INCLUDE}/${SCITER_SDK_MAIN})
 message(STATUS "SKITER main file path:" ${SCITER_SDK_INCLUDE}/${SCITER_SDK_MAIN})
 
 # Создание директории bin
-#FILE(MAKE_DIRECTORY ./bin ./build)
+FILE(MAKE_DIRECTORY ./bin ./build)
 
 # Задача для запуска команд
 ADD_CUSTOM_TARGET(SHELL_CMD ALL)
