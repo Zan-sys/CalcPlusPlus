@@ -5,3 +5,6 @@
 	path = lib/RE-flex
 	url = https://github.com/Genivia/RE-flex.git
 	ignore = all
+[submodule "lib/FwBase"]
+	path = lib/FwBase
+	url = https://github.com/Zan-sys/FwBase.git
