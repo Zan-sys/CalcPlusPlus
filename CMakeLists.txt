@@ -34,6 +34,7 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     option(PROJECT_BUILD_TYPE_RELEASE "Build type is Release" ON)
     message(STATUS "PROJECT BUILD TYPE IS RELEASE.")
 else()
+    # Если возникает ошибка на версии vscode 1.4 и выше, то в файле .vscode/settings.json необходимо добавить опцию - "cmake.preferredGenerators": [ "Ninja" ]
     # Проверти настройку CMAKE-TOOLS "cmake.setBuildTypeOnMultiConfig": true или "cmake.configureSettings": { "CMAKE_BUILD_TYPE": "${buildType}"}
     message(FATAL_ERROR "PROJECT BUILD TYPE EMPTY. CHECK CMAKE_BUILD_TYPE VARIABLE.")
 endif()

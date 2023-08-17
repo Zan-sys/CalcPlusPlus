@@ -89,5 +89,6 @@
         "xutility": "cpp",
         "*.inc": "cpp",
         "future": "cpp"
-    }
+    },
+    "cmake.preferredGenerators": [ "Ninja" ]
 }
